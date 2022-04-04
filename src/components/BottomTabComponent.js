@@ -27,7 +27,7 @@ return(
         </TouchableOpacity>
 
 
-        <TouchableOpacity style = {styles.innerView}>
+        <TouchableOpacity onPress={() => {navigation.navigate('ProfileScreen')}} style = {styles.innerView}>
 
             <Image style = {[styles.imgStyle, {tintColor : screenName == 'Profile' ? colors.primary : colors.grey}]} source = {require('../../assets/Icons/btuser.png')} />
 

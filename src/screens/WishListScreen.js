@@ -2,6 +2,7 @@ import React,{useState,useEffect} from 'react'
 import {SafeAreaView,View,Text,TouchableOpacity,StyleSheet,FlatList,Image} from 'react-native'
 import HeaderComponent from '../components/HeaderComponent'
 import colors from '../constants/colors'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { useDispatch,useSelector } from 'react-redux'
 import wishListAction from '../store/actions/wishList'
@@ -13,7 +14,7 @@ const WishListScreen = ({navigation,route}) => {
     const dispatch = useDispatch()
 
     const wishListProds = useSelector(state => state.WishList) 
-    console.log('wishlist prods.......', wishListProds)
+   
 
     useEffect(() => {
 
@@ -63,23 +64,52 @@ return(
         renderItem = {({item,index}) => {
             return(
 
-            <TouchableOpacity key = {index} onPress={() => {navigation.navigate('DetailScreen')}} style = {styles.cardContainer}>
+            <TouchableOpacity key = {index} onPress={() => {navigation.navigate('DetailScreen', {hotel: item})}} style = {styles.cardContainer}>
 
             <View style = {{width:'40%'}}>
 
-                <Image style = {{width:'100%',height:'100%'}} source= {item.img}/>
+                <Image style = {{width:'100%',height:'100%',borderRadius:10,}} source= {item.img}/>
 
 
             </View>
 
 
-            <View style = {{width:'60%',paddingLeft:15}}>
+            <View style = {{flex:1,paddingLeft:15,bottom:8}}>
 
                 <Text style = {styles.hotelNameTxt}>{item.name}</Text>
 
-                <Text style = {styles.countryTxt}>{item.country}</Text>
+                <View style = {styles.locationContainer}>
 
+                    <Icon name='place' size={25} color= '#033640' />
+
+                    <Text style = {styles.countryTxt}>{item.country}</Text>
+
+                </View>
+
+                <View style = {styles.rateContainer}>
+
+                    <Icon name = 'star' size={25} color= '#f5a623'/>
+
+                    <Text style = {styles.rateTxt}>{item.rate}</Text>
+
+                </View>
+                
+                <View style = {styles.priceContainer}>
+
+                    <Text style = {styles.priceTxt}>${item.price}/</Text>
+
+                    <Text style = {styles.perNightTxt}>{item.pernight}</Text>
+
+                </View>
+                
             </View>
+
+            
+            <TouchableOpacity onPress={() => {navigation.navigate('BookingScreen')}} style = {styles.bookNowView}>
+
+                <Text style = {{color:colors.white,fontSize:15,fontWeight:'bold'}}>Book Now</Text>
+                
+            </TouchableOpacity>        
 
 
 
@@ -114,11 +144,25 @@ const styles = StyleSheet.create({
 
     content :  {flex:1,},
 
-    cardContainer : {flexDirection:'row',alignItems:'center',backgroundColor:colors.white,height:150,padding:10,margin:10,borderRadius:10},
+    cardContainer : {flexDirection:'row',alignItems:'center',backgroundColor:colors.white,height:170,padding:10,marginTop:10,marginLeft:10,marginRight:10,borderRadius:10},
 
     hotelNameTxt : {fontSize:18,fontWeight:'bold'},
 
-    countryTxt : {fontSize:15, color:colors.primary}
+    countryTxt : {fontSize:15, color:colors.primary},
+
+    rateTxt : {fontSize:15,color:colors.primary,fontWeight:'bold'},
+
+    priceTxt : {fontSize:18,fontWeight:'bold'},
+
+    perNightTxt : {fontSize:13,},
+
+    locationContainer : {flexDirection:'row', alignItems:'center',marginTop:5},
+
+    rateContainer: {flexDirection:'row',alignItems:'center',marginTop:5},
+
+    priceContainer: {flexDirection:'row',alignItems:'center',marginTop:5},
+
+    bookNowView : {backgroundColor:colors.primary,position:'absolute',right:0,bottom:0,padding:10,borderTopLeftRadius:10,borderBottomRightRadius:10}
 
 
 

@@ -8,6 +8,7 @@ import HomeScreen from "../screens/HomeScreen";
 import DetailScreen from "../screens/DetailScreen";
 import BookingScreen from "../screens/BookingScreen";
 import WishListScreen from "../screens/WishListScreen";
+import ProfileScreen from "../screens/ProfileScreen";
 
 
 const stack = createNativeStackNavigator()
@@ -38,10 +39,11 @@ const MainNavigator = () => {
         <NavigationContainer>
             <drawer.Navigator drawerContent={props => CustomDrawerContent(props)} screenOptions={{headerShown:false}}>
 
-                <drawer.Screen name = 'HomeScreen'    component={HomeScreen}/>
-                <drawer.Screen name = 'DetailScreen'  component={DetailScreen}/>
-                <drawer.Screen name = 'BookingScreen' component={BookingScreen}/>
+                <drawer.Screen name = 'HomeScreen'     component={HomeScreen}/>
+                <drawer.Screen name = 'DetailScreen'   component={DetailScreen}/>
+                <drawer.Screen name = 'BookingScreen'  component={BookingScreen}/>
                 <drawer.Screen name = 'WishListScreen' component={WishListScreen}/>
+                <drawer.Screen name = 'ProfileScreen'  component={ProfileScreen}/>
 
             </drawer.Navigator>
         </NavigationContainer>
