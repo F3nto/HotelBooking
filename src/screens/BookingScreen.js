@@ -20,6 +20,8 @@ let genderArr = [
 
 const BookingScreen = ({navigation,route}) => {
 
+    
+
     const [checkinDateShow, setCheckinDateShow] = useState('')
     const [checkoutDateShow, setCheckoutDateShow] = useState('')
 
@@ -113,7 +115,7 @@ return(
                 <ImageBackground style = {{width:screenWidth,height:screenHeight,opacity:0.3}} source = {require('../../assets/bgimg.jpg')}/>
             </View>
 
-            <HeaderComponent navigation = {navigation} title = 'Booking' icon = 'back' parentScreenName={'DetailScreen'}/>
+            <HeaderComponent navigation = {navigation} title = 'Booking' icon = 'menu'/>
 
             <View style = {styles.content}>
 

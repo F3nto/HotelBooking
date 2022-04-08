@@ -1,16 +1,31 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import {SafeAreaView,View,Text,TouchableOpacity,StyleSheet,Image,Dimensions,ScrollView} from 'react-native'
 import HeaderComponent from '../components/HeaderComponent'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import colors from '../constants/colors'
+
+import CurrencyModalComponent from '../components/CurrencyModalComponent'
+import NationalityModalComponent from '../components/NationalityModalComponent'
+import LanguageModalComponent from '../components/LanguageModalComponent'
 
 const screenWidth = Dimensions.get('screen').width
 
 const ProfileScreen = ({navigation,route}) => {
 
+    const [ showCurrencyDialog, setShowCurrencyDialog] = useState(false)
+    const [ curren, setCurren] = useState('')
+
+    const [ showNationDialog, setShowNationDialog] = useState(false)
+    const [nation, setNation] = useState('')
+
+    const [showLanDialog, setShowLanDialog] = useState(false)
+    const [language, setLanguage] = useState('')
+
+
     return(
 
         <SafeAreaView style = {styles.container}>
-        <HeaderComponent navigation={navigation} title = 'ProfileScreen' icon = 'back'/>
+        <HeaderComponent navigation={navigation} title = 'ProfileScreen' icon = 'back' parentScreenName={'HomeScreen'}/>
 
         <ScrollView>
         <View style = {styles.content}>
@@ -20,7 +35,7 @@ const ProfileScreen = ({navigation,route}) => {
                 <Image style = {{width:80,height:80,borderRadius:70}} source= {require('../../assets/tor.jpg')}/>
             
                 <Text style = {styles.pfName}>Pyae Sone Tun</Text>
-                <Text style = {styles.pfEmail}>pyaesonetun1141999@gmail.com</Text>
+                <Text style = {styles.pfEmail}>fento99999@gmail.com</Text>
             
             
             </View>
@@ -48,27 +63,60 @@ const ProfileScreen = ({navigation,route}) => {
             
             </TouchableOpacity>
 
-            <TouchableOpacity style = {[styles.iconContainer, {marginTop:15}]}>
+            <TouchableOpacity onPress={() => {setShowCurrencyDialog(true)}} style = {[styles.iconContainer, {marginTop:15}]}>
 
                 <Image style = {{width:25,height:25,tintColor:'#0290a6'}} source = {require('../../assets/Icons/currency.png')}/>
 
                 <Text style = {styles.pfTxt}>Currency</Text>
 
+                <View style = {styles.showCurrencyContainer}>
+
+
+                    <Image style = {{width:25,height:25}} source= {curren.curImg}/>
+
+                    <Text style = {{marginLeft:5}}>{curren.curExchange}</Text>
+
+
+                </View>
+
             </TouchableOpacity>
 
-            <TouchableOpacity style = {[styles.iconContainer, {marginTop:15}]}>
+            <TouchableOpacity onPress={() => {setShowNationDialog(true)}} style = {[styles.iconContainer, {marginTop:15}]}>
 
                 <Image style = {{width:25,height:25,tintColor:'#0290a6'}} source = {require('../../assets/Icons/nation.png')}/>
 
                 <Text style = {styles.pfTxt}>Nationality</Text>
 
+                <View style = {styles.showNationalContainer}>
+
+                    <Image style = {{width:25,height:25}} source = {nation.flag}/>
+
+                    <Text style = {{marginLeft:5}}>{nation.nat}</Text>
+
+
+                </View>
+
+
+
             </TouchableOpacity>
 
-            <TouchableOpacity style = {[styles.iconContainer, {marginTop:15}]}>
+            <TouchableOpacity onPress={() => {setShowLanDialog(true)}} style = {[styles.iconContainer, {marginTop:15}]}>
 
                 <Image style = {{width:25,height:25,tintColor:'#0290a6'}} source = {require('../../assets/Icons/languages.png')}/>
 
                 <Text style = {styles.pfTxt}>Language</Text>
+
+                
+                <View style = {styles.showLanguageContainer}>
+
+                    <Image style = {{width:25,height:25}} source = {language.flag}/>
+
+                    <Text style = {{marginLeft:5}}>{language.lan}</Text>
+
+
+                </View>
+
+
 
             </TouchableOpacity>
 
@@ -94,7 +142,7 @@ const ProfileScreen = ({navigation,route}) => {
 
             <Text style = {styles.helpAndSupView}>Help and Support</Text>
 
-            <TouchableOpacity style = {[styles.iconContainer, {marginTop:15}]}>
+            <TouchableOpacity onPress={() => {navigation.navigate('CustomerServiceScreen')}} style = {[styles.iconContainer, {marginTop:15}]}>
 
                 <Image style = {{width:25,height:25,tintColor:'#0290a6'}} source = {require('../../assets/Icons/help.png')}/>
 
@@ -128,6 +176,19 @@ const ProfileScreen = ({navigation,route}) => {
 
             </TouchableOpacity>
 
+            <CurrencyModalComponent navigation={navigation} visible= {showCurrencyDialog} 
+            outCurHandler = {() => {setShowCurrencyDialog(false)}}
+            onPressFun = {(data) => {setCurren(data)}}/>
+          
+
+            <NationalityModalComponent navigation={navigation} visible= {showNationDialog}
+            outNatHandler = {() => {setShowNationDialog(false)}}
+            onPressFun = {(data) => {setNation(data)}}/>
+
+            <LanguageModalComponent navigation={navigation} visible= {showLanDialog}
+            outLanHandler = {() => {setShowLanDialog(false)}}
+            onPressFun = {(data) => {setLanguage(data)}}/>
+            
         </View>
         </ScrollView>
         </SafeAreaView>
@@ -159,7 +220,13 @@ const styles = StyleSheet.create({
 
     pfTxt : {marginLeft:10, fontSize:14},
 
-    helpAndSupView : {fontSize:16,fontWeight:'bold',marginTop:15,marginLeft:20}
+    helpAndSupView : {fontSize:16,fontWeight:'bold',marginTop:15,marginLeft:20},
+
+    showCurrencyContainer : {flexDirection:'row',alignItems:'center',marginLeft:30},
+
+    showNationalContainer : {flexDirection:'row', alignItems:'center',marginLeft:20},
+
+    showLanguageContainer : {flexDirection:'row',alignItems:'center',marginLeft:25}
 
 
 
