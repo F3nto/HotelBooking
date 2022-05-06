@@ -10,5 +10,6 @@ export default {
 
     primary : '#165c6b',
 
+    txt : '#093145'
 
 }

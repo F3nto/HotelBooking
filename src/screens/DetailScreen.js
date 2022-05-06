@@ -3,6 +3,7 @@ import {useIsFocused} from '@react-navigation/native'
 import {SafeAreaView,View,Text,TouchableOpacity,FlatList,StyleSheet,Image,Dimensions} from 'react-native'
 import HeaderComponent from "../components/HeaderComponent";
 import colors from '../constants/colors'
+import {LinearGradient} from 'expo-linear-gradient'
 
 import wishListAction from '../store/actions/wishList'
 import {useDispatch} from 'react-redux'
@@ -69,8 +70,6 @@ const DetailScreen = ({navigation,route}) => {
 
 
     const dispatch = useDispatch()          
-
-    const isFocused = useIsFocused()
    
     let {hotel,parentScreen} = route.params
 
@@ -78,8 +77,6 @@ const DetailScreen = ({navigation,route}) => {
 
     
     useEffect(() => {
-
-        console.log('hotel route....', hotel)
 
         AsyncStorage.getItem('wishList').then((res) => {
 
@@ -321,17 +318,28 @@ const FacilitiesIcons = () => {
                     {hotel.discount != 0 && <Text style = {{textDecorationLine:'line-through',color:colors.primary,fontSize:16}}>${hotel.price}/per night</Text> }
                     
                     
-                    <Text style = {{color:colors.primary,fontSize:16}}>${hotel.price - hotel.discount}/per night</Text>
+                    <Text style = {{color:colors.txt,fontSize:16}}>${hotel.price - hotel.discount}/per night</Text>
 
                 </View>
 
+              
 
-                <TouchableOpacity onPress = {() => navigation.navigate('BookingScreen')} style = {styles.BtnView}>
+              
 
+                <LinearGradient colors={['#7ae7ff','#a3e3ff', '#e6fffd',]} start = {{x : 0,y : 0}} end = {{x:0,y:1}} style = {styles.BtnView}>
+
+                <TouchableOpacity onPress = {() => navigation.navigate('BookingScreen', {hotel : hotel})}>
+                    
                     <Text style = {styles.BtnText}>Book Now</Text>
 
                 </TouchableOpacity>
 
+                </LinearGradient>
+
+
+               
+
+              
                 </View>
 
                 </View>
@@ -370,20 +378,25 @@ const styles = StyleSheet.create({
 
     FacilitiesIconsView : {flexDirection:'row', alignItems:'center',justifyContent:'space-around',marginTop:20},
 
-    btnContainer : {backgroundColor:colors.homeBg,width:screenWidth,height:70,padding:10,borderTopRightRadius:50,borderTopLeftRadius:50,shadowColor:colors.primary,elevation:10,borderColor:colors.primary,borderWidth:1},
+    btnContainer : {backgroundColor:'#f0fffe',width:screenWidth,height:70,
+                    padding:10,borderTopRightRadius:50,borderTopLeftRadius:50,
+                    borderColor:'#7ae7ff',borderWidth:1,
+                
+                    },
+                  
 
-    BtnView : {backgroundColor:'#00a68d', 
-               width:'45%', height : 70,
-               paddingHorizontal:20,paddingVertical:10,
-               elevation:10 , 
-               shadowColor:'#000',
-               justifyContent:'center',alignItems:'center',
-               position:'absolute',
-               right:0,top:0,
-               borderTopRightRadius:50,borderBottomLeftRadius:50,
+    BtnView : {backgroundColor:colors.homeBg, 
+              width:screenWidth/4+20, height:50,
+              position:'absolute',right:40,top:10,
+              borderRadius:5,
+              justifyContent:'center',alignItems:'center',
+              shadowColor:'#00ff99',elevation:5,
+              
+              
+             
             },
 
-    BtnText : {color:'#fff', fontWeight:'bold',fontSize:16},
+    BtnText : {color:colors.txt, fontWeight:'bold',fontSize:18,textShadowColor:'#7ae7ff'},
 
     pernightView : {alignItems:'center',position:'absolute', left:50,top:10},
 

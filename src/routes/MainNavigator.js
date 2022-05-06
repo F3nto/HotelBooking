@@ -13,6 +13,14 @@ import BookingListScreen from "../screens/BookingListScreen";
 import ContactUsScreen from "../screens/ContactUsScreen";
 import CustomerServiceScreen from '../screens/CustomerServiceScreen';
 import AccommodationScreen from "../screens/AccommodationScreen";
+import HelpScreen from "../screens/HelpScreen";
+import CoronavirusScreen from "../screens/CoronavirusScreen";
+import CancellationScreen from "../screens/CancellationScreen";
+import BookingDetailScreen from "../screens/BookingDetailScreen";
+import PaymentScreen from "../screens/PaymentScreen";
+import PricingScreen from "../screens/PricingScreen";
+import PropertiesPoliciesScreen from "../screens/PropertyPoliciesScreen";
+import ExtraFacilitiesScreen from "../screens/ExtraFacilitiesScreen";
 
 
 
@@ -53,6 +61,16 @@ const MainNavigator = () => {
                 <drawer.Screen name = 'ContactUsScreen'       component={ContactUsScreen}/>
                 <drawer.Screen name = 'CustomerServiceScreen' component={CustomerServiceScreen}/>
                 <drawer.Screen name = 'AccommodationScreen'   component={AccommodationScreen}/>
+                <drawer.Screen name = 'HelpScreen'            component={HelpScreen}/>
+                <drawer.Screen name = 'CoronavirusScreen'     component={CoronavirusScreen}/>
+                <drawer.Screen name = 'CancellationScreen'    component={CancellationScreen}/>
+                <drawer.Screen name = 'BookingDetailScreen'   component={BookingDetailScreen}/>
+                <drawer.Screen name = 'PaymentScreen'         component={PaymentScreen}/>
+                <drawer.Screen name = 'PricingScreen'         component={PricingScreen}/>
+                <drawer.Screen name = 'PropertiesPoliciesScreen' component={PropertiesPoliciesScreen}/>
+                <drawer.Screen name = 'ExtraFacilitiesScreen'   component={ExtraFacilitiesScreen}/>
+
+                
             </drawer.Navigator>
         </NavigationContainer>
     )

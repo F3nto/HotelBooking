@@ -18,12 +18,12 @@ const WishListScreen = ({navigation,route}) => {
 
     useEffect(() => {
 
-    const getWishListProducts = async() => {
+    const getWishListHotel = async() => {
     
         let wishListDataFromAsync = await AsyncStorage.getItem('wishList')
         let wishListData = JSON.parse(wishListDataFromAsync)
 
-        if(wishListData === null){
+        if(wishListData == null){
 
             AsyncStorage.setItem('wishList', JSON.stringify([]))
             dispatch(wishListAction.addToWishList([]))
@@ -40,7 +40,7 @@ const WishListScreen = ({navigation,route}) => {
 
     }
 
-    getWishListProducts()
+    getWishListHotel()
 
 
 
@@ -51,7 +51,7 @@ return(
 
     <SafeAreaView style = {styles.container}>
 
-        <HeaderComponent navigation={navigation} title = 'Wish List' icon = 'back' />
+        <HeaderComponent navigation={navigation} title = 'Wish List' icon = 'back' parentScreenName={'HomeScreen'} />
 
 
         <View style = {styles.content}>
@@ -107,7 +107,7 @@ return(
             
             <TouchableOpacity onPress={() => {navigation.navigate('BookingScreen')}} style = {styles.bookNowView}>
 
-                <Text style = {{color:colors.white,fontSize:15,fontWeight:'bold'}}>Book Now</Text>
+                <Text style = {{color:colors.primary,fontSize:15,fontWeight:'bold'}}>Book Now</Text>
                 
             </TouchableOpacity>        
 
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
 
     content :  {flex:1,},
 
-    cardContainer : {flexDirection:'row',alignItems:'center',backgroundColor:colors.white,height:170,padding:10,marginTop:10,marginLeft:10,marginRight:10,borderRadius:10},
+    cardContainer : {flexDirection:'row',alignItems:'center',backgroundColor:'#f0fffe',height:170,padding:10,marginTop:10,marginLeft:10,marginRight:10,borderRadius:10},
 
     hotelNameTxt : {fontSize:18,fontWeight:'bold'},
 
@@ -162,7 +162,9 @@ const styles = StyleSheet.create({
 
     priceContainer: {flexDirection:'row',alignItems:'center',marginTop:5},
 
-    bookNowView : {backgroundColor:colors.primary,position:'absolute',right:0,bottom:0,padding:10,borderTopLeftRadius:10,borderBottomRightRadius:10}
+    bookNowView : {backgroundColor:colors.homeBg,position:'absolute',right:0,bottom:0,
+                   padding:10,borderTopLeftRadius:10,borderBottomRightRadius:10,
+                   shadowColor:'#000',elevation:30,}
 
 
 

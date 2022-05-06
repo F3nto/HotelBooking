@@ -17,7 +17,7 @@ return(
 
             <View style = {styles.profileContainer}>
 
-                <Image style = {{width:70,height:70,}} source = {require('../../assets/Icons/user.png')}/>
+                <Image style = {{width:70,height:70}} source = {require('../../assets/Icons/user.png')}/>
 
                 <Text style = {styles.profileTxt}>Fento</Text>
 
@@ -25,7 +25,7 @@ return(
 
             <TouchableOpacity style = {styles.imgAndTxtContainer} onPress = {() => {navigation.navigate('HomeScreen')}}>
         
-                <Image style = {{width:25, height:25}} source = {require('../../assets/Icons/home.png')}/>
+                <Image style = {{width:25, height:25,}} source = {require('../../assets/Icons/home.png')}/>
 
                 <Text style = {styles.screenTxt}>Home</Text>
 

@@ -2,6 +2,7 @@ import React from 'react'
 import {SafeAreaView,View,Text,TouchableOpacity,Image,FlatList,StyleSheet} from 'react-native'
 import colors from '../constants/colors';
 import HeaderComponent from '../components/HeaderComponent';
+import TopTabComponent from '../components/TopTabComponent';
 
 
 const CustomerServiceScreen = ({navigation,route}) => {
@@ -25,14 +26,10 @@ const CustomerServiceScreen = ({navigation,route}) => {
 
                 <Text style = {styles.descTitleTxt}>Frequently asked questions</Text>
 
-
-
-
-
             </View>
 
-
-
+            <TopTabComponent navigation={navigation}/>
+         
 
             </View>
         </SafeAreaView>
@@ -46,15 +43,17 @@ const styles = StyleSheet.create({
 
     content : {flex:1},
 
-    titleView : {height:100,backgroundColor:colors.white,margin:10,borderRadius:10,shadowColor:'#000',elevation:5},
+    titleView : {height:100,backgroundColor:colors.white,margin:10,borderRadius:10,shadowColor:'#0290a6',elevation:10},
 
     titleTxt : {fontSize:20,fontWeight:'bold',marginTop:10,marginLeft:10},
 
     avaTxt : {fontSize:16,marginTop:10,marginLeft:10},
 
-    descView : {backgroundColor:colors.white,margin:10,borderRadius:10,shadowColor:'#000',elevation:5},
+    descView : {height:70,backgroundColor:colors.white,margin:10,borderRadius:10,shadowColor:'#0290a6',elevation:5},
 
-    descTitleTxt : {fontSize:18, fontWeight:'bold',marginLeft:10}
+    descTitleTxt : {fontSize:18, fontWeight:'bold',marginLeft:10, marginTop:20},
+
+    
 
 
 

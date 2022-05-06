@@ -20,7 +20,7 @@ const hotelArr = [
         discount : '50',
         pernight : 'per night',
         locationDetail : 'Within 20 minutes walk from Opera Metro Station, Hotel du Louvre in the Unbound Collection by Hyatt offers guests an ideal base when in Paris. It is situated a short stroll from Musee du Louvre and Tuileries Garden.',
-
+        backgroundImg  : require('../../assets/BackgroundImage/FranceBg.jpg'),
 
         detailImg : [
             
@@ -45,6 +45,7 @@ const hotelArr = [
         discount : '25',
         pernight : 'per night',
         locationDetail : 'No. 82, Sin Phyu Shin Avenue, Pyay Road, Yangon, Myanmar',
+        backgroundImg  : require('../../assets/BackgroundImage/YangonBg.jpg'),
 
         detailImg : [
 
@@ -71,7 +72,7 @@ const hotelArr = [
         discount : '0',
         pernight : 'per night',
         locationDetail : 'Situated amongst local tourist attractions, Baur au Lac is a short walk from Bahnhofstrasse. It boasts views of Zurich, Prehistoric Pile Dwellings Around the Alps and Lake Zurich and provides a variety of facilities, including valet parking',
-
+        backgroundImg  : require('../../assets/BackgroundImage/SwitzerlandBg.jpg'),
         detailImg : [
 
             {
@@ -94,6 +95,7 @@ const hotelArr = [
         discount : '50',
         pernight : 'per night',
         locationDetail : 'The Peninsula Tokyo is conveniently located near Tokyo Electric Power Company, Hibiya Park and Marunouchi. It is situated in Chiyoda and has easy access to public transport, with Tokyo Railway',
+        backgroundImg  : require('../../assets/BackgroundImage/JapanBg.jpg'),
 
         detailImg : [
             
@@ -117,6 +119,7 @@ const hotelArr = [
         discount : '50',
         pernight : 'per night',
         locationDetail : 'Hotel Nuevo Madrid offers 4-star accommodation, as well as a Turkish steam bath, a sauna and a Jacuzzi. This contemporary property is conveniently located in Costillares and is within walking distance of Manoteras Metro Station.',
+        backgroundImg  : require('../../assets/BackgroundImage/SpainBg.jpg'),
 
         detailImg : [
 
@@ -140,6 +143,7 @@ const hotelArr = [
         discount : '0',
         pernight : 'per night',
         locationDetail : 'The Hotel Principe Di Savoia is located in Milan Italy and only 350 feet from the Repubblica Metro and Train Station for access to the rest of the city. Porta Nuova and Piazza Gae Aulenti Square are about 3,100 feet away while Rho Fiera Milano Exhibition Center is less than 10 miles',
+        backgroundImg  : require('../../assets/BackgroundImage/ItalyBg.jpg'),
 
         detailImg : [
 
@@ -162,6 +166,7 @@ const hotelArr = [
         discount : '50',
         pernight : 'per night',
         locationDetail : 'Situated in Singapore City Centre, this hotel is a short walk from Suntec City, Marina Bay Sands Casino and Singapore Flyer. A limousine service, outdoor tennis courts and a swimming pool are just some of the deluxe amenities available to guests throughout their stay.',
+        backgroundImg  : require('../../assets/BackgroundImage/SingaporeBg.jpg'),
 
         detailImg : [
 
@@ -186,6 +191,7 @@ const hotelArr = [
         discount : '0',
         pernight : 'per night',
         locationDetail : 'Lotte World Tower 76f-101f, Songpa-gu, Seoul 05551, South Korea',
+        backgroundImg  : require('../../assets/BackgroundImage/KoreaBg.jpg'),
 
         detailImg : [
 
@@ -208,6 +214,7 @@ const hotelArr = [
         discount : '100',
         pernight : 'per night',
         locationDetail : 'Situated in Dubai, Hyatt Regency Dubai Creek Heights is within a 10-minute drive of Dubai International Airport and provides a Jacuzzi, a rooftop terrace and an infinity pool. It is surrounded by a variety of well-known shops and is minutes on foot from Dubai Healthcare City Station.',
+        backgroundImg  : require('../../assets/BackgroundImage/DubaiBg.jpg'),
 
         detailImg : [
 

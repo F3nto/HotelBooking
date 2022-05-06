@@ -1,8 +1,10 @@
 import React,{useState,useEffect} from 'react'
-import {SafeAreaView,View,Text,TouchableOpacity,StyleSheet,Image,Dimensions,ScrollView} from 'react-native'
+import {SafeAreaView,View,Text,TouchableOpacity,StyleSheet,Image,Dimensions,ScrollView,} from 'react-native'
 import HeaderComponent from '../components/HeaderComponent'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import colors from '../constants/colors'
+import {LinearGradient} from 'expo-linear-gradient'
+
 
 import CurrencyModalComponent from '../components/CurrencyModalComponent'
 import NationalityModalComponent from '../components/NationalityModalComponent'
@@ -12,10 +14,10 @@ const screenWidth = Dimensions.get('screen').width
 
 const ProfileScreen = ({navigation,route}) => {
 
-    const [ showCurrencyDialog, setShowCurrencyDialog] = useState(false)
-    const [ curren, setCurren] = useState('')
+    const [ showCurrencyDialog, setShowCurrencyDialog ] = useState(false)
+    const [ curren, setCurren ] = useState('')
 
-    const [ showNationDialog, setShowNationDialog] = useState(false)
+    const [showNationDialog, setShowNationDialog] = useState(false)
     const [nation, setNation] = useState('')
 
     const [showLanDialog, setShowLanDialog] = useState(false)
@@ -30,16 +32,18 @@ const ProfileScreen = ({navigation,route}) => {
         <ScrollView>
         <View style = {styles.content}>
 
-            <View style = {styles.proileOuterView}>
-
+            <LinearGradient style = {styles.profileView} colors={['#7ae7ff','#82deff', '#e6fffd',]} start = {{x : 1,y : 0}} end = {{x:1,y:1}}>
+          
                 <Image style = {{width:80,height:80,borderRadius:70}} source= {require('../../assets/tor.jpg')}/>
-            
+                
                 <Text style = {styles.pfName}>Pyae Sone Tun</Text>
                 <Text style = {styles.pfEmail}>fento99999@gmail.com</Text>
-            
-            
-            </View>
 
+            </LinearGradient>
+
+         
+         
+            
             <View style = {styles.flotView}>
 
 
@@ -115,28 +119,9 @@ const ProfileScreen = ({navigation,route}) => {
 
 
                 </View>
-
-
-
             </TouchableOpacity>
 
-            <View style = {{width:screenWidth/1.2,marginLeft:20,marginTop:15,height:1,backgroundColor:'#0290a6'}}/>
-
-            <TouchableOpacity style = {[styles.iconContainer, {marginTop:15}]}>
-
-                <Image style = {{width:25,height:25,tintColor:'#0290a6'}} source = {require('../../assets/Icons/pfwishlist.png')}/>
-
-                <Text style = {styles.pfTxt}>Your WishList</Text>
-
-            </TouchableOpacity>
-
-            <TouchableOpacity style = {[styles.iconContainer, {marginTop:15}]}>
-
-                <Image style = {{width:25,height:25,tintColor:'#0290a6'}} source = {require('../../assets/Icons/bookinglist.png')}/>
-
-                <Text style = {styles.pfTxt}>Booking List</Text>
-
-            </TouchableOpacity>
+            
 
             <View style = {{width:screenWidth/1.2,marginLeft:20,marginTop:15,height:1,backgroundColor:'#0290a6'}}/>
 
@@ -205,11 +190,12 @@ const styles = StyleSheet.create({
 
     content : {flex:1,},
 
-    proileOuterView : {backgroundColor:'#0290a6',height:250,justifyContent:'center',alignItems:'center'},
+    profileView : {height:250,justifyContent:'center',alignItems:'center',},
 
-    pfName : {fontSize:20,fontWeight:'bold',color:colors.white},
 
-    pfEmail : {fontSize:14,color:colors.grey},
+    pfName : {fontSize:20,fontWeight:'bold',color:colors.txt},
+
+    pfEmail : {fontSize:14,color:colors.txt},
 
     flotView : {backgroundColor:colors.white,
                 height:100,width:screenWidth/1.5,top:-30,
