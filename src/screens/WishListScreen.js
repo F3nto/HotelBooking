@@ -3,10 +3,12 @@ import {SafeAreaView,View,Text,TouchableOpacity,StyleSheet,FlatList,Image} from 
 import HeaderComponent from '../components/HeaderComponent'
 import colors from '../constants/colors'
 import Icon from 'react-native-vector-icons/MaterialIcons'
+import BottomTabComponent from '../components/BottomTabComponent'
 
 import { useDispatch,useSelector } from 'react-redux'
 import wishListAction from '../store/actions/wishList'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+
 
 
 const WishListScreen = ({navigation,route}) => {
@@ -132,6 +134,8 @@ return(
         }
 
         </View>
+
+        <BottomTabComponent navigation = {navigation} screenName = 'WishList'/>
     </SafeAreaView>
 )
 }

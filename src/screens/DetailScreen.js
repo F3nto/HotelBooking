@@ -10,6 +10,8 @@ import {useDispatch} from 'react-redux'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
+
+
 const screenWidth = Dimensions.get('screen').width
 
 const facilitiesArr = [
@@ -82,8 +84,6 @@ const DetailScreen = ({navigation,route}) => {
 
             const wishListData = JSON.parse(res)
 
-            console.log('async wishlist .....', wishListData)
-
             if(wishListData == null){
 
 
@@ -104,8 +104,6 @@ const DetailScreen = ({navigation,route}) => {
 
                 }
 
-                console.log('is wishlist items...', isWishList)
-
                 if(isWishList != null){
 
                     setIsInWishList(true)
@@ -123,8 +121,6 @@ const DetailScreen = ({navigation,route}) => {
 
 
     const addToWishList = (wishListItem) => {
-
-        console.log('wishList item', wishListItem)
 
     if(isInWishList){
         
@@ -144,6 +140,7 @@ const DetailScreen = ({navigation,route}) => {
             AsyncStorage.setItem('wishList', JSON.stringify(leftData))
             dispatch(wishListAction.addToWishList(leftData))
 
+           
         })
 
             setIsInWishList(false)
@@ -165,15 +162,21 @@ const DetailScreen = ({navigation,route}) => {
                 AsyncStorage.setItem('wishList', JSON.stringify(wishListArr))
                 dispatch(wishListAction.addToWishList(wishListArr))
 
+
             }else{
 
                 let isWishList = null
 
                 for(let i = 0; i < wishListData.length; i++){
 
+                  
                     if(wishListData[i]._id ==  wishListItem._id){
 
                         isWishList = wishListItem._id
+
+                        
+
+
 
 
                     }
@@ -189,6 +192,7 @@ const DetailScreen = ({navigation,route}) => {
                 AsyncStorage.setItem('wishList', JSON.stringify(wishListData))
                 dispatch(wishListAction.addToWishList(wishListData))
 
+              
 
             }
 
@@ -286,7 +290,11 @@ const FacilitiesIcons = () => {
 
             </View>
 
-            <Text style = {styles.seeOnMap}>See on Map</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('MapViewScreen')}>
+
+                <Text style = {styles.seeOnMap}>See on Map</Text>
+
+            </TouchableOpacity>
 
             <View style = {styles.country}>
 
@@ -372,7 +380,7 @@ const styles = StyleSheet.create({
 
     landmark : {fontSize:12, marginLeft:15, color:'red', textDecorationLine:'underline'},
 
-    seeOnMap : {fontSize:12, color:'red',textDecorationLine:'underline',top:-15,left:50},
+    seeOnMap : {fontSize:14, color:'red',textDecorationLine:'underline',top:-10,left:50},
 
     fandAtext : {marginLeft:15, marginTop:15, fontSize:16, fontWeight:'bold', color:colors.primary},
 

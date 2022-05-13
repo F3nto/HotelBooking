@@ -257,7 +257,7 @@ const HomeScreen = ({navigation,route}) => {
 
         </View>
     )}
-
+    
 
     return(
 

@@ -21,6 +21,7 @@ import PaymentScreen from "../screens/PaymentScreen";
 import PricingScreen from "../screens/PricingScreen";
 import PropertiesPoliciesScreen from "../screens/PropertyPoliciesScreen";
 import ExtraFacilitiesScreen from "../screens/ExtraFacilitiesScreen";
+import MapView from '../map/MapView'
 
 
 
@@ -69,6 +70,7 @@ const MainNavigator = () => {
                 <drawer.Screen name = 'PricingScreen'         component={PricingScreen}/>
                 <drawer.Screen name = 'PropertiesPoliciesScreen' component={PropertiesPoliciesScreen}/>
                 <drawer.Screen name = 'ExtraFacilitiesScreen'   component={ExtraFacilitiesScreen}/>
+                <drawer.Screen name = 'MapViewScreen' component={MapView}/>
 
                 
             </drawer.Navigator>

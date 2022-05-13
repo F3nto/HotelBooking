@@ -42,7 +42,7 @@ export default HeaderComponent;
 
 const styles = StyleSheet.create({
 
-    container : {flexDirection:'row',height:60,alignItems:'center',marginLeft:20,marginTop:20},
+    container : {flexDirection:'row',alignItems:'center',marginLeft:20,height:50,marginTop:20},
 
     imgStyle : {width:30,height:30},
 

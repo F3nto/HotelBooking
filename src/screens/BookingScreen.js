@@ -43,9 +43,8 @@ const BookingScreen = ({navigation,route}) => {
     const [isFocusedCheckOutDate, setIsFocusedCheckOutDate] = useState(false)   //! for changing colors in textfield
     const [isFocusedEmail, setIsFocusedEmail] = useState(false)                 //! for changing colors in textfield
     const [isFocusedPhone, setIsFocusedPhone] = useState(false)                 //! for changing colors in textfield
-    
 
-    const [qty , setQty] = useState(1)
+  
     
     const [checkinDateShow, setCheckinDateShow] = useState('')
     const [checkoutDateShow, setCheckoutDateShow] = useState('')
@@ -59,7 +58,7 @@ const BookingScreen = ({navigation,route}) => {
     const [checkOutMode, setCheckOutMode] = useState('date')                  //! related with check out date Picker
 
 
-
+    
 
     const [gender, setGender] = useState('Mr')          //! init of Gender Modal Picker
 
@@ -166,6 +165,10 @@ const BookingScreen = ({navigation,route}) => {
 
     const addToBookingList = (hotel) => {
 
+        let filNum = 1;
+        let qty = 1;
+
+        
         hotel.roomCount = roomCount
         hotel.guestCount = guestCount
         hotel.childCount = childCount
@@ -177,6 +180,9 @@ const BookingScreen = ({navigation,route}) => {
         hotel.lastName = lastName
 
         hotel.gender = gender
+
+        hotel.filNum = filNum
+       
 
         hotel.qty = qty                             //! add booking qty
         let bookingQty = hotel.qty                  //! add booking qty
@@ -190,7 +196,7 @@ const BookingScreen = ({navigation,route}) => {
         if(bookingData == null){
 
 
-            bookingArr.push(hotel)
+            bookingArr.unshift(hotel)
 
             AsyncStorage.setItem('bookingList', JSON.stringify(bookingArr))
             dispatch(bookingListAction.addToBookingList(bookingArr))
@@ -202,31 +208,59 @@ const BookingScreen = ({navigation,route}) => {
 
             let isBookingList = null 
 
-            for(let i= 0; i < bookingData.length ; i++){
+            for(let i = 0; i < bookingData.length ; i++){
 
+                bookingQty += bookingData[i].qty
 
                 if(bookingData[i]._id == hotel._id){
 
                     isBookingList = hotel._id  
 
+                    bookingData[i].qty = qty + 1
 
                 }
-            
+
             }
 
             if(isBookingList == null){
 
                 bookingData.unshift(hotel)
 
+                for(let i = 0; i < bookingData.length; i++){
+
+                    bookingData[i].filNum += 1
+
+                    hotel.filNum += bookingData[i].filNum
+
+                }
+
+                console.log('index before adding....', hotel.filNum)
+                
+
             }else{
 
                 bookingData.unshift(hotel)
 
+                for(let i = 0; i < bookingData.length; i++){
+
+                    bookingData[i].filNum += 1
+
+                    hotel.filNum += bookingData[i].filNum
+
+                }
+
+                console.log('index after adding....', hotel.filNum)
+
+           
                
             }
 
             AsyncStorage.setItem('bookingList', JSON.stringify(bookingData))
             dispatch(bookingListAction.addToBookingList(bookingData))
+
+            AsyncStorage.setItem('bookingQty', JSON.stringify(bookingQty))
+            dispatch(bookingQtyAction.addToBookingQty(bookingQty))
+
 
           
         }
@@ -253,6 +287,7 @@ const BookingScreen = ({navigation,route}) => {
     setIsFocusedCheckInDate(false);             //! textField color init red
     setIsFocusedCheckOutDate(false);             //! textField color init red
 
+    setShowCheckValidAndInvalid(false);          //! Email init invalid
 
     }
 
@@ -320,7 +355,7 @@ const BookingScreen = ({navigation,route}) => {
 
         if(value.length == 0){
 
-            setEmailValidError('Please Enter Email Address!');
+            setEmailValidError('Enter Email Address!');
 
             
             setIsFocusedEmail(false)
@@ -352,6 +387,7 @@ const BookingScreen = ({navigation,route}) => {
             setShowCheckValidAndInvalid(true);
 
         }
+
 
       
     }
@@ -400,6 +436,7 @@ return(
                     value={email}
                     onChangeText = {(text) => {EmailValidation(text) , setEmail(text)}}
 
+
                     onBlur = {() => {setIsFocusedEmail(false)
                     
                     {emailValidError == '' && setIsFocusedEmail(true) }}
@@ -409,17 +446,26 @@ return(
 
                     />
 
-                    {showCheckValidAndInvalid ?
+                    {showCheckValidAndInvalid ? 
+
 
                         <Image style = {{width:25,height:25}} source = {require('../../assets/check.png')}/>
 
-                    :
+
+
+                    : emailValidError == 'Please Enter Valid Email Address!' ?
+
+
 
                     <TouchableOpacity onPress={() => {setEmail('')}}>
 
                         <Image style = {{width:30,height:30}} source = {require('../../assets/wrong.png')}/>
                     
                     </TouchableOpacity>
+
+                    :
+
+                    null
 
                     }
 

@@ -4,6 +4,7 @@ import HeaderComponent from '../components/HeaderComponent'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import colors from '../constants/colors'
 import {LinearGradient} from 'expo-linear-gradient'
+import BottomTabComponent from '../components/BottomTabComponent'
 
 
 import CurrencyModalComponent from '../components/CurrencyModalComponent'
@@ -176,6 +177,8 @@ const ProfileScreen = ({navigation,route}) => {
             
         </View>
         </ScrollView>
+
+        <BottomTabComponent navigation={navigation} screenName = 'Profile'/>
         </SafeAreaView>
 
     )

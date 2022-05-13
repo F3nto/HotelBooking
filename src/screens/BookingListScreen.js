@@ -1,10 +1,13 @@
 import React,{useEffect} from 'react'
-import {SafeAreaView,View,Text,TouchableOpacity,Image,FlatList,StyleSheet,Dimensions} from 'react-native'
+import {SafeAreaView,View,Text,TouchableOpacity,Image,FlatList,StyleSheet,Dimensions,} from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import HeaderComponent from '../components/HeaderComponent'
 import colors from '../constants/colors'
+import BottomTabComponent from '../components/BottomTabComponent'
 import bookingListAction from '../store/actions/bookingList'
+import bookingQtyAction from '../store/actions/bookingQty'
 import { useDispatch,useSelector } from 'react-redux'
+
 
 
 const screenWidth = Dimensions.get('screen').width
@@ -15,9 +18,11 @@ const BookingListScreen = ({navigation,route}) => {
 
     const hotel = useSelector(state => state.BookingList)
 
+    const bookingQty = useSelector(state => state.BookingQty)
+
     useEffect(() => {
 
-        const getBookingData = async() => {
+        const getBookingListData = async() => {
 
         const bookingDataFromAsync = await AsyncStorage.getItem('bookingList')
         const bookingData = JSON.parse(bookingDataFromAsync)
@@ -37,28 +42,93 @@ const BookingListScreen = ({navigation,route}) => {
 
         }
 
-        getBookingData()
+        const getBookingQty = async() => {
+
+        const bookingQtyFromAsync = await AsyncStorage.getItem('bookingQty')
+        const bookingQty = JSON.parse(bookingQtyFromAsync)
+
+        if(bookingQty == null){
+
+            AsyncStorage.setItem('bookingQty',JSON.stringify(0))
+            dispatch(bookingQtyAction.addToBookingQty(0))
+        
+        }else{
+
+            AsyncStorage.setItem('bookingQty', JSON.stringify(bookingQty))
+            dispatch(bookingQtyAction.addToBookingQty(bookingQty))
+
+
+        }
+
+        }
+
+        getBookingListData()
+        getBookingQty()
     
     },[route])
+
+
+
+    const removeEachHotel = (removeHotel) => {
+
+    console.log('Remove this Item....', removeHotel)
+
+    AsyncStorage.getItem('bookingList').then(res => {
+
+    const bookingListData = JSON.parse(res)
+
+    let leftBookingListData = []
+
+        if(bookingListData != null){
+
+           
+            leftBookingListData = bookingListData.filter(prod => prod.filNum != removeHotel.filNum)    
+
+            
+            
+        }
+
+        AsyncStorage.setItem('bookingList', JSON.stringify(leftBookingListData))
+        dispatch(bookingListAction.addToBookingList(leftBookingListData))
+
+        AsyncStorage.setItem('bookingQty', JSON.stringify(bookingQty - 1))
+        dispatch(bookingQtyAction.addToBookingQty(bookingQty - 1))
+
+    })
+
+    .catch((e) => {
+
+        console.log('error...', e)
+
+    })
+
+    }
 
     return(
         <SafeAreaView style = {styles.container}>
             <HeaderComponent navigation={navigation} title = 'Booking List' icon = 'menu'/>
             <View style = {styles.content}>
                 
-                
-             <FlatList
+            {hotel ?. length > 0 ?
+
+            <FlatList
             
             data={hotel}
             renderItem = {({item,index}) => {
                 
             return(
 
-                <TouchableOpacity style = {styles.cardContainer}>
+                <View style = {styles.cardContainer}>
 
                 <View style = {{height:screenWidth/2-5}}>
+
+                    
                     <Image style = {{width:'100%',height:'100%',borderTopLeftRadius:10,borderTopRightRadius:10}} source = {item.img}/>
+
+
                 </View>
+
+              
                 
       
                 <Text style = {styles.hotelName}>{item.name}</Text>
@@ -139,22 +209,64 @@ const BookingListScreen = ({navigation,route}) => {
                     
                     <View style = {styles.confirmView}>
 
-                    <Text style = {{fontSize:16,fontWeight:'bold',color:'#05fc8d'}}>Confirmed Your Booking!!!</Text>
-                    <Image style = {{width:25,height:25,marginLeft:5}} source = {require('../../assets/check-mark.png')}/>
+                        <Text style = {{fontSize:16,fontWeight:'bold',color:'#05fc8d'}}>Confirmed Your Booking!!!</Text>
+                        <Image style = {{width:25,height:25,marginLeft:5}} source = {require('../../assets/check-mark.png')}/>
 
                     </View>
+ 
 
-                </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => removeEachHotel(item)} style = {{position:'absolute',top:10,right:10}}>
+
+                        <Image style = {{width:30,height:30}} source = {require('../../assets/trash.png')}/>
+
+                    </TouchableOpacity>
+
+                </View>
+
+                
 
             )
 
             }}
                 keyExtractor = {(item,index) => index.toString()}
+   
+                ListFooterComponent = {
+
+                    <TouchableOpacity onPress={() => {
+                    
+                    AsyncStorage.removeItem('bookingList')
+                    dispatch(bookingListAction.addToBookingList([]))
+                    
+                    AsyncStorage.removeItem('bookingQty')
+                    dispatch(bookingQtyAction.addToBookingQty(0))
+                    
+                     
+                   }} style = {styles.footer}>
+
+                        <Text style = {{fontSize:16,fontWeight:'bold',color:'#fff'}}>Remove All</Text>
+
+                    </TouchableOpacity>
+                }
             /> 
 
+            :
+            
+            <View style = {{flex:1,justifyContent:'center', alignItems:'center'}}>
+
+                <Text>There is no Data in your booking list!!!</Text>
 
 
             </View>
+            
+            
+            
+            }
+
+           
+
+            </View>
+            <BottomTabComponent navigation={navigation} screenName = 'BookingList'/>
         </SafeAreaView>
     )
 }
@@ -189,6 +301,8 @@ const styles = StyleSheet.create({
     firstAndLastTxt : {fontSize:16,fontWeight:'bold',color:colors.primary},
 
     confirmView : {flexDirection:'row',justifyContent:'center',alignItems:'center',marginTop:5},
+
+    footer : {padding:10,backgroundColor:colors.orange,justifyContent:'center',alignItems:'center'}
 
 
 
