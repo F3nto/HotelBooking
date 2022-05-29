@@ -33,8 +33,8 @@ const styles = StyleSheet.create({
 
     content : {flex:1,justifyContent:'center',alignItems:'center'},
 
-    commonView : {padding:10,flexDirection:'row',alignItems:'center',justifyContent:'space-between',backgroundColor:colors.white,borderRadius:10,shadowColor:'#08deff',elevation:5},
+    commonView : {padding:10,flexDirection:'row',alignItems:'center',justifyContent:'space-between',backgroundColor:colors.white,borderRadius:10,shadowColor:'#08deff',elevation:5,borderColor:'#08deff',borderWidth:0.5},
 
-    commonTxt : {marginLeft:15,fontSize:18,fontWeight:'bold'}
+    commonTxt : {marginLeft:15,fontSize:18,fontWeight:'bold',color:colors.txt,textShadowColor:'#0290a6',textShadowRadius:2}
 
 })

@@ -1,16 +1,19 @@
 import React,{useState} from 'react'
-import {SafeAreaView,View,Text,TouchableOpacity,StyleSheet,Image,Dimensions} from 'react-native'
+import {SafeAreaView,View,Text,TouchableOpacity,StyleSheet,Image,Dimensions,FlatList,Platform} from 'react-native'
 import HeaderComponent from '../components/HeaderComponent'
 import colors from '../constants/colors'
 
 import MapView, {PROVIDER_GOOGLE, Marker, Callout} from 'react-native-maps'
 
+
 const screenWidth = Dimensions.get('screen').width
 const screenHeight = Dimensions.get('screen').height
 
+
+
 const MapViewScreen = ({navigation,route}) => {
 
-    // const {hotelMap} = route.params
+    const {lat, long, } = route.params
 
     return(
 
@@ -20,24 +23,39 @@ const MapViewScreen = ({navigation,route}) => {
 
             <View style = {styles.content}>
 
-            <MapView style = {styles.mapView}
-            provider = {PROVIDER_GOOGLE}
-
-            initialRegion={{
             
-            latitude: 16.844834132432165, 
-            longitude: 96.13773183294371,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-            }}
+            <MapView style = {styles.mapView}
+            
+                provider = {PROVIDER_GOOGLE}
+                
 
+                region = {{
+                    
+                    latitude : lat,
+                    longitude : long,
+                    latitudeDelta : 0.0922,
+                    longitudeDelta :  0.0421,
+
+                }}
+                    
             >
 
-           
+                <Marker
+                
+                coordinate={{latitude : lat, longitude: long}}
+                
+                image = {require('../../assets/Icons/maploc.png')}
+               
+                >
 
+
+                </Marker>
+
+              
             </MapView>
-
-
+    
+               
+        
             </View>
 
         </SafeAreaView>
@@ -52,7 +70,9 @@ const styles = StyleSheet.create({
 
     content   : {flex:1},
 
-    mapView : {width:screenWidth,height:screenHeight}
+    mapView : {width:screenWidth, height:screenHeight},
+
+    calloutView : {padding:10,backgroundColor:colors.white,justifyContent:'center', alignItems:'center'}
 
 
 

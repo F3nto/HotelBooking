@@ -22,11 +22,11 @@ const CustomerServiceScreen = ({navigation,route}) => {
             </View>
             
 
-            <View style = {styles.descView}>
+           
 
-                <Text style = {styles.descTitleTxt}>Frequently asked questions</Text>
+            <Text style = {styles.descTitleTxt}>Frequently asked questions</Text>
 
-            </View>
+          
 
             <TopTabComponent navigation={navigation}/>
          
@@ -43,15 +43,14 @@ const styles = StyleSheet.create({
 
     content : {flex:1},
 
-    titleView : {height:100,backgroundColor:colors.white,margin:10,borderRadius:10,shadowColor:'#0290a6',elevation:10},
+    titleView : {height:100,backgroundColor:colors.white,margin:10,borderRadius:10,shadowColor:'#08deff',elevation:30,borderColor:'#08deff',borderWidth:1},
 
-    titleTxt : {fontSize:20,fontWeight:'bold',marginTop:10,marginLeft:10},
+    titleTxt : {fontSize:20,fontWeight:'bold',marginTop:10,marginLeft:20,color:colors.txt},
 
-    avaTxt : {fontSize:16,marginTop:10,marginLeft:10},
+    avaTxt : {fontSize:16,marginTop:10,marginLeft:20},
 
-    descView : {height:70,backgroundColor:colors.white,margin:10,borderRadius:10,shadowColor:'#0290a6',elevation:5},
-
-    descTitleTxt : {fontSize:18, fontWeight:'bold',marginLeft:10, marginTop:20},
+    
+    descTitleTxt : {fontSize:18, fontWeight:'bold',marginLeft:20, marginTop:20,color:colors.txt,textShadowColor:'#0290a6',textShadowRadius:3, elevation:5},
 
     
 

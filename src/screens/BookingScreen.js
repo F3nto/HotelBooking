@@ -166,6 +166,7 @@ const BookingScreen = ({navigation,route}) => {
     const addToBookingList = (hotel) => {
 
         let filNum = 1;
+
         let qty = 1;
 
         
@@ -182,6 +183,7 @@ const BookingScreen = ({navigation,route}) => {
         hotel.gender = gender
 
         hotel.filNum = filNum
+        
        
 
         hotel.qty = qty                             //! add booking qty
@@ -206,53 +208,22 @@ const BookingScreen = ({navigation,route}) => {
 
         }else{
 
-            let isBookingList = null 
-
+        
             for(let i = 0; i < bookingData.length ; i++){
 
                 bookingQty += bookingData[i].qty
 
-                if(bookingData[i]._id == hotel._id){
-
-                    isBookingList = hotel._id  
-
-                    bookingData[i].qty = qty + 1
-
-                }
-
             }
 
-            if(isBookingList == null){
-
                 bookingData.unshift(hotel)
 
                 for(let i = 0; i < bookingData.length; i++){
 
-                    bookingData[i].filNum += 1
+                hotel.filNum += bookingData[i].filNum
 
-                    hotel.filNum += bookingData[i].filNum
 
-                }
+                console.log('Adding Filter Number....', hotel.filNum)
 
-                console.log('index before adding....', hotel.filNum)
-                
-
-            }else{
-
-                bookingData.unshift(hotel)
-
-                for(let i = 0; i < bookingData.length; i++){
-
-                    bookingData[i].filNum += 1
-
-                    hotel.filNum += bookingData[i].filNum
-
-                }
-
-                console.log('index after adding....', hotel.filNum)
-
-           
-               
             }
 
             AsyncStorage.setItem('bookingList', JSON.stringify(bookingData))
@@ -261,8 +232,6 @@ const BookingScreen = ({navigation,route}) => {
             AsyncStorage.setItem('bookingQty', JSON.stringify(bookingQty))
             dispatch(bookingQtyAction.addToBookingQty(bookingQty))
 
-
-          
         }
     })
 

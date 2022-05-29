@@ -42,16 +42,6 @@ const ProfileScreen = ({navigation,route}) => {
 
             </LinearGradient>
 
-         
-         
-            
-            <View style = {styles.flotView}>
-
-
-
-
-            </View>
-
             <TouchableOpacity style = {styles.iconContainer}>
                 
                 <Image style = {{width:25,height:25,tintColor:'#0290a6'}} source = {require('../../assets/Icons/acc.png')}/>
@@ -136,21 +126,7 @@ const ProfileScreen = ({navigation,route}) => {
 
             </TouchableOpacity>
 
-            <TouchableOpacity style = {[styles.iconContainer, {marginTop:15}]}>
-
-                <Image style = {{width:25,height:25,tintColor:'#0290a6'}} source = {require('../../assets/Icons/safe.png')}/>
-
-                <Text style = {styles.pfTxt}>Safety Resource Centre</Text>
-
-            </TouchableOpacity>
-
-            <TouchableOpacity style = {[styles.iconContainer, {marginTop:15}]}>
-
-                <Image style = {{width:25,height:25,tintColor:'#0290a6'}} source = {require('../../assets/Icons/contact-us.png')}/>
-
-                <Text style = {styles.pfTxt}>Contact Us</Text>
-
-            </TouchableOpacity>
+          
 
             <View style = {{width:screenWidth/1.2,marginLeft:20,marginTop:15,height:1,backgroundColor:'#0290a6'}}/>
             
@@ -200,12 +176,9 @@ const styles = StyleSheet.create({
 
     pfEmail : {fontSize:14,color:colors.txt},
 
-    flotView : {backgroundColor:colors.white,
-                height:100,width:screenWidth/1.5,top:-30,
-                marginLeft:60,borderRadius:15,
-                shadowColor:'#08deff',elevation:5},
+   
 
-    iconContainer : {flexDirection:'row', alignItems:'center',marginLeft:20},
+    iconContainer : {flexDirection:'row', alignItems:'center',marginLeft:20,marginTop:20},
 
     pfTxt : {marginLeft:10, fontSize:14},
 

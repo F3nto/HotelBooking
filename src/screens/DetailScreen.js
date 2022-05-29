@@ -6,11 +6,10 @@ import colors from '../constants/colors'
 import {LinearGradient} from 'expo-linear-gradient'
 
 import wishListAction from '../store/actions/wishList'
-import {useDispatch} from 'react-redux'
+import wishListQtyAction from '../store/actions/wishListQty'
+import {useDispatch, useSelector} from 'react-redux'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-
-
-
+import InsertScreen from "./MapData/InsertScreen";
 
 const screenWidth = Dimensions.get('screen').width
 
@@ -66,12 +65,15 @@ const facilitiesArr = [
 
 ]
 
+
 const DetailScreen = ({navigation,route}) => {
     
     const [isInWishList, setIsInWishList] = useState(false)
 
 
-    const dispatch = useDispatch()          
+    const dispatch = useDispatch()    
+    
+    const wishListQtyFromRedux = useSelector(state => state.WishListQty)   //! redux
    
     let {hotel,parentScreen} = route.params
 
@@ -122,6 +124,12 @@ const DetailScreen = ({navigation,route}) => {
 
     const addToWishList = (wishListItem) => {
 
+    let qty = 1;
+
+    wishListItem.qty = qty
+
+    let wishListQty = wishListItem.qty
+
     if(isInWishList){
         
         AsyncStorage.getItem('wishList').then((res) => {
@@ -133,12 +141,20 @@ const DetailScreen = ({navigation,route}) => {
             if(wishListData != null){
 
                 leftData = wishListData.filter(prod => prod._id != wishListItem._id)
+                
 
-
+               
             }
+            
+          
 
             AsyncStorage.setItem('wishList', JSON.stringify(leftData))
             dispatch(wishListAction.addToWishList(leftData))
+
+            AsyncStorage.setItem('wishListQty', JSON.stringify(wishListQtyFromRedux - 1))
+            dispatch(wishListQtyAction.addToWishListQty(wishListQtyFromRedux - 1))
+
+            
 
            
         })
@@ -163,23 +179,27 @@ const DetailScreen = ({navigation,route}) => {
                 dispatch(wishListAction.addToWishList(wishListArr))
 
 
+                AsyncStorage.setItem('wishListQty', JSON.stringify(wishListQty))
+                dispatch(wishListQtyAction.addToWishListQty(wishListQty))
+
+
             }else{
 
                 let isWishList = null
 
                 for(let i = 0; i < wishListData.length; i++){
 
-                  
+                    wishListQty += wishListData[i].qty
+
                     if(wishListData[i]._id ==  wishListItem._id){
 
                         isWishList = wishListItem._id
 
-                        
-
-
-
-
+                       
                     }
+
+                    
+
                 }
 
                 if(isWishList == null){
@@ -192,15 +212,20 @@ const DetailScreen = ({navigation,route}) => {
                 AsyncStorage.setItem('wishList', JSON.stringify(wishListData))
                 dispatch(wishListAction.addToWishList(wishListData))
 
-              
+                AsyncStorage.setItem('wishListQty', JSON.stringify(wishListQty))
+                dispatch(wishListQtyAction.addToWishListQty(wishListQty))
 
             }
 
+            
+
             setIsInWishList(true)
 
-
+            
+          
         })
 
+      
         .catch((error) => {
 
 
@@ -209,6 +234,9 @@ const DetailScreen = ({navigation,route}) => {
         })
 
     }
+
+
+   
     
 }
 
@@ -290,11 +318,18 @@ const FacilitiesIcons = () => {
 
             </View>
 
-            <TouchableOpacity onPress={() => navigation.navigate('MapViewScreen')}>
+         
 
-                <Text style = {styles.seeOnMap}>See on Map</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('MapViewScreen', {lat : hotel.lat, long : hotel.long, locImg : hotel.img ,locName : hotel.name})}>
+
+                <Text style = {styles.seeOnMap}>{hotel.seeOnMap}</Text>
 
             </TouchableOpacity>
+
+           
+
+          
+          
 
             <View style = {styles.country}>
 
@@ -386,9 +421,9 @@ const styles = StyleSheet.create({
 
     FacilitiesIconsView : {flexDirection:'row', alignItems:'center',justifyContent:'space-around',marginTop:20},
 
-    btnContainer : {backgroundColor:'#f0fffe',width:screenWidth,height:70,
+    btnContainer : {width:screenWidth,height:70,
                     padding:10,borderTopRightRadius:50,borderTopLeftRadius:50,
-                    borderColor:'#7ae7ff',borderWidth:1,
+                    shadowColor:'#08deff',elevation:30,borderColor:'#08deff',borderWidth:1
                 
                     },
                   

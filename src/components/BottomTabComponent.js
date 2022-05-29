@@ -4,6 +4,7 @@ import colors from '../constants/colors'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useDispatch,useSelector } from 'react-redux'
 import bookingQtyAction from '../store/actions/bookingQty'
+import wishListQtyAction from '../store/actions/wishListQty'
 
 
 
@@ -15,7 +16,7 @@ const BottomTabComponent = ({navigation,screenName,route}) => {
 
     const bookingQty = useSelector(state => state.BookingQty)
     
-    
+    const wishListQty = useSelector(state => state.WishListQty)
 
     useEffect(() => {
 
@@ -39,8 +40,31 @@ const BottomTabComponent = ({navigation,screenName,route}) => {
 
         }
 
+        const getWishListQty = async() => {
+
+        let wishListQtyFromAsync = await AsyncStorage.getItem('wishListQty')
+
+        let wishListQtyData = JSON.parse(wishListQtyFromAsync)
+
+        if(wishListQtyData == null){
+
+            AsyncStorage.setItem('wishListQty', JSON.stringify(0))
+            dispatch(wishListQtyAction.addToWishListQty(0))
+
+
+        }else{
+
+
+            AsyncStorage.setItem('wishListQty', JSON.stringify(wishListQtyData))
+            dispatch(wishListQtyAction.addToWishListQty(wishListQtyData))
+        }
+
+
+    }
+
 
     getBookingQty()
+    getWishListQty()
        
     },[route])
 
@@ -64,6 +88,15 @@ return(
 
             <Image style = {[styles.imgStyle, {tintColor : screenName == 'WishList' ? '#039ba1' : colors.grey}]} source = {require('../../assets/Icons/btwishlist.png')} />
 
+            {wishListQty != 0 &&
+
+            <View style = {styles.showQtyView}>
+
+                <Text style = {styles.qtyTxt}>{wishListQty}</Text>
+
+            </View>
+
+            } 
 
             <Text style = {{color: screenName == 'WishList' ? '#039ba1' : colors.grey}}>WishList</Text>
 
