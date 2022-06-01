@@ -280,7 +280,9 @@ const starIconArr = [
 const HomeScreen = ({navigation,route}) => {
 
     const [filteredData, setFilteredData] = useState([])
+
     const [searchTxt, setSearchTxt] = useState('')
+
     const [isInSearchTxt, setIsInSearchTxt] = useState(true)
    
     const StarIcons = () => {
@@ -305,11 +307,17 @@ const HomeScreen = ({navigation,route}) => {
 
             const newData = hotelArr.filter(item => {
 
-                const itemData = item.name ? item.name.toLowerCase() : ''.toLowerCase();
+                const itemData = item.name.toLowerCase();  
         
                 const textData = text.toLowerCase();
+
+                // const indexNo = itemData.indexOf(textData) > -1 ; 
+
+                // console.log('index no.....', indexNo)
+        
         
                 return itemData.indexOf(textData) > -1;
+
         
             })
 
@@ -354,7 +362,7 @@ const HomeScreen = ({navigation,route}) => {
 
                
                {isInSearchTxt ? 
-               
+
                <FlatList
 
                 margin= {7}

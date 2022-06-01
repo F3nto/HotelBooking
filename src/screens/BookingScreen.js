@@ -49,11 +49,11 @@ const BookingScreen = ({navigation,route}) => {
     const [checkinDateShow, setCheckinDateShow] = useState('')
     const [checkoutDateShow, setCheckoutDateShow] = useState('')
 
-    const [checkInDate, setCheckInDate] = useState(new Date(1598051730000)) //! related with check in date Picker
+    const [checkInDate, setCheckInDate] = useState(new Date()) //! related with check in date Picker
     const [checkInShow, setCheckInShow] = useState(false)                   //! related with check in date Picker
     const [checkInMode, setCheckInMode] = useState('date')                  //! related with check in date Picker
 
-    const [checkOutDate, setCheckOutDate] = useState(new Date(1598051730000)) //! related with check out date Picker
+    const [checkOutDate, setCheckOutDate] = useState(new Date()) //! related with check out date Picker
     const [checkOutShow, setCheckOutShow] = useState(false)                   //! related with check out date Picker
     const [checkOutMode, setCheckOutMode] = useState('date')                  //! related with check out date Picker
 
@@ -594,7 +594,6 @@ return(
                 editable = {false}
                 selectTextOnFocus = {false}
 
-
                 />
 
                 <TouchableOpacity onPress={() => {showCheckOutDatePicker(), setIsFocusedCheckOutDate(true)}}>
@@ -609,20 +608,26 @@ return(
   
 
             {checkInShow && <DatePicker
+
+                    
                       testID='datePicker'
                       value={checkInDate}
                       mode = {checkInMode}
                       display = 'default'
                       onChange={onChangeCheckIn}
+                      
             />
             }
 
             {checkOutShow && <DatePicker
+                      
+                    
                       testID='datePicker'
                       value={checkOutDate}
                       mode = {checkOutMode}
                       display = 'default'
                       onChange={onChangeCheckOut}
+                     
 
             />
             }
