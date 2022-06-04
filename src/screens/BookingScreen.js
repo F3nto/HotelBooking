@@ -39,8 +39,10 @@ const BookingScreen = ({navigation,route}) => {
 
     const [isFocusedFirstName, setIsFocusedFirstName] = useState(false)         //! for changing colors in textfield
     const [isFocusedLastName, setIsFocusedLastName] = useState(false)           //! for changing colors in textfield
+
     const [isFocusedCheckInDate, setIsFocusedCheckInDate] = useState(false)     //! for changing colors in textfield
     const [isFocusedCheckOutDate, setIsFocusedCheckOutDate] = useState(false)   //! for changing colors in textfield
+
     const [isFocusedEmail, setIsFocusedEmail] = useState(false)                 //! for changing colors in textfield
     const [isFocusedPhone, setIsFocusedPhone] = useState(false)                 //! for changing colors in textfield
 
@@ -49,11 +51,11 @@ const BookingScreen = ({navigation,route}) => {
     const [checkinDateShow, setCheckinDateShow] = useState('')
     const [checkoutDateShow, setCheckoutDateShow] = useState('')
 
-    const [checkInDate, setCheckInDate] = useState(new Date()) //! related with check in date Picker
+    const [checkInDate, setCheckInDate] = useState(new Date())                 //! related with check in date Picker
     const [checkInShow, setCheckInShow] = useState(false)                   //! related with check in date Picker
     const [checkInMode, setCheckInMode] = useState('date')                  //! related with check in date Picker
 
-    const [checkOutDate, setCheckOutDate] = useState(new Date()) //! related with check out date Picker
+    const [checkOutDate, setCheckOutDate] = useState(new Date())               //! related with check out date Picker
     const [checkOutShow, setCheckOutShow] = useState(false)                   //! related with check out date Picker
     const [checkOutMode, setCheckOutMode] = useState('date')                  //! related with check out date Picker
 
@@ -73,26 +75,55 @@ const BookingScreen = ({navigation,route}) => {
   
     const onChangeCheckIn = (event, selectedDate) => {
 
-        const currentDate = selectedDate || checkInDate;
-        setCheckInShow(Platform.OS === 'ios');
-        setCheckInDate(currentDate)
+        setCheckInShow(false)
 
-        const tempDate = new Date(currentDate)
-        const fullCheckInDate = tempDate.getDate() + '/' + (tempDate.getMonth() + 1) + '/' + tempDate.getFullYear();
-        setCheckinDateShow(fullCheckInDate)
+        if(selectedDate) {
+
+            const currentDate = selectedDate || checkInDate;  
+            (Platform.OS === 'ios');setCheckInShow
+            setCheckInDate(currentDate)
+
+            const tempDate = new Date(currentDate)
+            const fullCheckInDate = tempDate.getDate() + '/' + (tempDate.getMonth() + 1) + '/' + tempDate.getFullYear();
+            setCheckinDateShow(fullCheckInDate)
+
+        }else{
+
+        
+
+            setCheckinDateShow('')
+
+            setIsFocusedCheckInDate(false)
+
+
+        }
         
     }
 
     
    const onChangeCheckOut = (event, selectedDate) => {
 
-    const currentDate = selectedDate || checkOutDate;
-    setCheckOutShow(Platform.OS === 'ios');
-    setCheckOutDate(currentDate)
+    setCheckOutShow(false)
 
-    const tempDate = new Date(currentDate)
-    const fullCheckOutDate = tempDate.getDate() + '/' + (tempDate.getMonth() + 1) + '/' + tempDate.getFullYear();
-    setCheckoutDateShow(fullCheckOutDate)
+    if(selectedDate) {
+
+        const currentDate = selectedDate || checkOutDate;
+        setCheckOutShow(Platform.OS === 'ios');
+        setCheckOutDate(currentDate)
+
+        const tempDate = new Date(currentDate)
+        const fullCheckOutDate = tempDate.getDate() + '/' + (tempDate.getMonth() + 1) + '/' + tempDate.getFullYear();
+        setCheckoutDateShow(fullCheckOutDate)
+
+    }else {
+
+        setCheckoutDateShow('')
+
+        setIsFocusedCheckOutDate(false)
+
+
+
+    }
     
 }
 
@@ -544,7 +575,7 @@ return(
 
                 onBlur = {() => {setIsFocusedPhone(false)
                 
-                {phNumber != '' && setIsFocusedPhone(true)}
+                {phNumber != '' && setIsFocsuedPhone(true)}
 
                 }}
                 />
@@ -615,6 +646,7 @@ return(
                       mode = {checkInMode}
                       display = 'default'
                       onChange={onChangeCheckIn}
+                      minimumDate={new Date()}
                       
             />
             }
@@ -627,7 +659,7 @@ return(
                       mode = {checkOutMode}
                       display = 'default'
                       onChange={onChangeCheckOut}
-                     
+                      minimumDate={checkInDate}
 
             />
             }

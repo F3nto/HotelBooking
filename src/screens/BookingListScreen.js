@@ -3,6 +3,7 @@ import {SafeAreaView,View,Text,TouchableOpacity,Image,FlatList,StyleSheet,Dimens
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import HeaderComponent from '../components/HeaderComponent'
 import colors from '../constants/colors'
+import {LinearGradient} from 'expo-linear-gradient'
 import BottomTabComponent from '../components/BottomTabComponent'
 import bookingListAction from '../store/actions/bookingList'
 import bookingQtyAction from '../store/actions/bookingQty'
@@ -209,7 +210,7 @@ const BookingListScreen = ({navigation,route}) => {
                     
                     <View style = {styles.confirmView}>
 
-                        <Text style = {{fontSize:16,fontWeight:'bold',color:'#05fc8d'}}>Confirmed Your Booking!!!</Text>
+                        <Text style = {{fontSize:16,fontWeight:'bold',color:'#00915e'}}>Confirmed Your Booking!!!</Text>
                         <Image style = {{width:25,height:25,marginLeft:5}} source = {require('../../assets/check-mark.png')}/>
 
                     </View>
@@ -221,6 +222,17 @@ const BookingListScreen = ({navigation,route}) => {
                         <Image style = {{width:30,height:30}} source = {require('../../assets/trash.png')}/>
 
                     </TouchableOpacity>
+                        
+
+                    <LinearGradient colors={['#18c1c9','#3df5ff', '#c9fbff',]} start = {{x : 0,y : 0}} end = {{x:0.8,y:0}} style = {styles.reviewContainer}> 
+
+                    <TouchableOpacity>
+
+                        <Text style = {styles.reviewTxt}>Write a Review</Text>
+
+                    </TouchableOpacity>
+
+                    </LinearGradient>
 
                 </View>
 
@@ -278,7 +290,7 @@ const styles = StyleSheet.create({
 
     content : {flex:1},
 
-    cardContainer : {backgroundColor:colors.white,borderRadius:10,margin:7,height:350},
+    cardContainer : {backgroundColor:colors.white,borderRadius:10,margin:7,height:380},
 
     imgContainer : {borderTopRightRadius:10,borderTopLeftRadius:10},
 
@@ -302,7 +314,11 @@ const styles = StyleSheet.create({
 
     confirmView : {flexDirection:'row',justifyContent:'center',alignItems:'center',marginTop:5},
 
-    footer : {padding:10,backgroundColor:colors.orange,justifyContent:'center',alignItems:'center'}
+    footer : {padding:10,backgroundColor:colors.orange,justifyContent:'center',alignItems:'center'},
+
+    reviewContainer : {padding:10,position:'absolute',bottom:0,right:0,borderTopLeftRadius:10,borderBottomRightRadius:10},
+
+    reviewTxt : {fontSize:16,fontWeight:'bold',color:colors.txt},
 
 
 

@@ -284,6 +284,8 @@ const HomeScreen = ({navigation,route}) => {
     const [searchTxt, setSearchTxt] = useState('')
 
     const [isInSearchTxt, setIsInSearchTxt] = useState(true)
+
+    const [showInvalidData, setShowInvalidData] = useState(false)
    
     const StarIcons = () => {
     
@@ -300,6 +302,8 @@ const HomeScreen = ({navigation,route}) => {
 
         </View>
     )}
+
+    let newData = [];
 
     const searchTxtFunction = (text) => {
         
@@ -328,6 +332,8 @@ const HomeScreen = ({navigation,route}) => {
             setFilteredData(newData)   
 
            
+        
+
         }else{
 
             setSearchTxt(text)
@@ -335,6 +341,8 @@ const HomeScreen = ({navigation,route}) => {
             setFilteredData([]) 
             
             setIsInSearchTxt(true)
+
+
 
         }
     }
@@ -359,7 +367,7 @@ const HomeScreen = ({navigation,route}) => {
 
     
                 />
-
+                    
                
                {isInSearchTxt ? 
 
@@ -410,6 +418,9 @@ const HomeScreen = ({navigation,route}) => {
                             <Text style = {{color:'#086c80'}}>per night</Text>
         
                         </View>
+
+
+                        
         
                     </View>
                 </TouchableOpacity>
@@ -419,10 +430,13 @@ const HomeScreen = ({navigation,route}) => {
                 }}
                
                 keyExtractor = {(item,index) => index.toString()}
+                
 
                 />
                 
+              
                 : 
+
 
                 <FlatList
                 showsVerticalScrollIndicator = {false}
@@ -455,6 +469,8 @@ const HomeScreen = ({navigation,route}) => {
                
                 )      
 
+                
+
 
                 }}
 
@@ -463,6 +479,8 @@ const HomeScreen = ({navigation,route}) => {
 
 
                 />
+
+                
             
             }
             </View>
@@ -505,5 +523,9 @@ const styles = StyleSheet.create({
     cardBottomOuterContainer : {flex:1,flexDirection:'row', justifyContent:'space-between'},
 
     perNightContainer : {marginRight:15,marginTop:20},
+
+    invalidDataView : {justifyContent:'center',alignItems:'center'},
+
+    invalidDataTxt : {color:colors.txt,fontSize:16,fontWeight:'bold'}
 
 })
