@@ -285,8 +285,6 @@ const HomeScreen = ({navigation,route}) => {
 
     const [isInSearchTxt, setIsInSearchTxt] = useState(true)
 
-    const [showInvalidData, setShowInvalidData] = useState(false)
-   
     const StarIcons = () => {
     
     return(
@@ -303,51 +301,44 @@ const HomeScreen = ({navigation,route}) => {
         </View>
     )}
 
-    let newData = [];
+  
 
     const searchTxtFunction = (text) => {
         
         if(text){
 
-            const newData = hotelArr.filter(item => {
+            let newData = hotelArr.filter(item => {
 
-                const itemData = item.name.toLowerCase();  
+            const itemData = item.name.toLowerCase();  
         
-                const textData = text.toLowerCase();
+            const textData = text.toLowerCase();
 
-                // const indexNo = itemData.indexOf(textData) > -1 ; 
+              
+            return itemData.indexOf(textData) > -1;
 
-                // console.log('index no.....', indexNo)
-        
-        
-                return itemData.indexOf(textData) > -1;
-
-        
+                
             })
+
+
+            setSearchTxt(text) 
 
             setIsInSearchTxt(false)
 
-            setSearchTxt(text)
+            setFilteredData(newData) 
 
-            setFilteredData(newData)   
-
-           
-        
+         
 
         }else{
 
-            setSearchTxt(text)
+            setSearchTxt(text) 
 
-            setFilteredData([]) 
-            
             setIsInSearchTxt(true)
 
-
-
+            setFilteredData([]) 
         }
+
     }
-        
-        
+    
     return(
         <SafeAreaView style = {styles.container}>
 
@@ -357,7 +348,7 @@ const HomeScreen = ({navigation,route}) => {
 
                 <SearchBar
                 style = {styles.searchBar}
-             
+
                
                 placeholder="Search here...."
                 
@@ -367,9 +358,25 @@ const HomeScreen = ({navigation,route}) => {
 
     
                 />
+
+                
+
+                { filteredData.length == 0 &&
+
+                <View style = {{flex:1,justifyContent:'center',alignItems:'center'}}>
+
+                    <Text style = {styles.invalidDataTxt}>Sorry we couldn't find any matches for...{searchTxt}</Text>
+
+                    <Image style = {{width:'70%',height:'70%',marginTop:10}} resizeMode = 'contain' source = {require('../../assets/seee-dog.webp')}/>
+
+                </View>
+
                     
-               
-               {isInSearchTxt ? 
+                }
+
+           
+
+               { isInSearchTxt ? 
 
                <FlatList
 
@@ -433,11 +440,10 @@ const HomeScreen = ({navigation,route}) => {
                 
 
                 />
+
+                :  
+
                 
-              
-                : 
-
-
                 <FlatList
                 showsVerticalScrollIndicator = {false}
                 data={filteredData}
@@ -480,9 +486,11 @@ const HomeScreen = ({navigation,route}) => {
 
                 />
 
-                
-            
+
             }
+          
+
+
             </View>
             <BottomTabComponent navigation={navigation} screenName = 'Home'/>
         </SafeAreaView>
@@ -506,7 +514,7 @@ const styles = StyleSheet.create({
 
     cardContainer : {height:280, margin:7,backgroundColor:colors.homeBg, borderRadius:10, shadowColor:colors.primary, elevation:7},
 
-    filteredCardContainer : {flex:1,flexDirection:'row',alignItems:'center',margin:7,backgroundColor:colors.white,padding:10,borderRadius:10},
+    filteredCardContainer : {flexDirection:'row',alignItems:'center',margin:7,backgroundColor:colors.white,padding:10,borderRadius:10},
 
     starAndRateView : {flexDirection:'row', alignItems : 'center'},
 
@@ -524,8 +532,7 @@ const styles = StyleSheet.create({
 
     perNightContainer : {marginRight:15,marginTop:20},
 
-    invalidDataView : {justifyContent:'center',alignItems:'center'},
-
-    invalidDataTxt : {color:colors.txt,fontSize:16,fontWeight:'bold'}
+  
+    invalidDataTxt : {color:colors.txt,fontSize:16,fontWeight:'bold',}
 
 })

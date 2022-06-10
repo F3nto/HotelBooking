@@ -80,7 +80,7 @@ const BookingScreen = ({navigation,route}) => {
         if(selectedDate) {
 
             const currentDate = selectedDate || checkInDate;  
-            (Platform.OS === 'ios');setCheckInShow
+            setCheckInShow(Platform.OS === 'ios');
             setCheckInDate(currentDate)
 
             const tempDate = new Date(currentDate)
@@ -575,7 +575,7 @@ return(
 
                 onBlur = {() => {setIsFocusedPhone(false)
                 
-                {phNumber != '' && setIsFocsuedPhone(true)}
+                {phNumber != '' && setIsFocusedPhone(true)}
 
                 }}
                 />

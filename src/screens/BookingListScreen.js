@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react'
+import React,{useEffect,useState} from 'react'
 import {SafeAreaView,View,Text,TouchableOpacity,Image,FlatList,StyleSheet,Dimensions,} from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import HeaderComponent from '../components/HeaderComponent'
@@ -9,11 +9,14 @@ import bookingListAction from '../store/actions/bookingList'
 import bookingQtyAction from '../store/actions/bookingQty'
 import { useDispatch,useSelector } from 'react-redux'
 
+import ReviewModalComponent from '../components/ReviewModalComponent'
 
 
 const screenWidth = Dimensions.get('screen').width
 
 const BookingListScreen = ({navigation,route}) => {
+
+    const [showReviewDialog, setShowReviewDialog] = useState(false)
 
     const dispatch = useDispatch()
 
@@ -223,16 +226,15 @@ const BookingListScreen = ({navigation,route}) => {
 
                     </TouchableOpacity>
                         
+                    <TouchableOpacity onPress={() => {setShowReviewDialog(true)}}>
 
                     <LinearGradient colors={['#18c1c9','#3df5ff', '#c9fbff',]} start = {{x : 0,y : 0}} end = {{x:0.8,y:0}} style = {styles.reviewContainer}> 
 
-                    <TouchableOpacity>
-
                         <Text style = {styles.reviewTxt}>Write a Review</Text>
 
-                    </TouchableOpacity>
-
                     </LinearGradient>
+
+                    </TouchableOpacity>
 
                 </View>
 
@@ -275,9 +277,11 @@ const BookingListScreen = ({navigation,route}) => {
             
             }
 
-           
+            
+            <ReviewModalComponent navigation={navigation} visible = {showReviewDialog} disableModal = {() => setShowReviewDialog(false)} />
 
             </View>
+
             <BottomTabComponent navigation={navigation} screenName = 'BookingList'/>
         </SafeAreaView>
     )
@@ -316,7 +320,7 @@ const styles = StyleSheet.create({
 
     footer : {padding:10,backgroundColor:colors.orange,justifyContent:'center',alignItems:'center'},
 
-    reviewContainer : {padding:10,position:'absolute',bottom:0,right:0,borderTopLeftRadius:10,borderBottomRightRadius:10},
+    reviewContainer : {padding:10,borderTopLeftRadius:10,borderBottomRightRadius:10,width:140,justifyContent:'center',alignItems:'center',marginLeft:'60%',marginTop:5},
 
     reviewTxt : {fontSize:16,fontWeight:'bold',color:colors.txt},
 

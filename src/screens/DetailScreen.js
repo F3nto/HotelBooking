@@ -1,6 +1,5 @@
 import React, {useState,useEffect} from "react";
-import {useIsFocused} from '@react-navigation/native'
-import {SafeAreaView,View,Text,TouchableOpacity,FlatList,StyleSheet,Image,Dimensions} from 'react-native'
+import {SafeAreaView,View,Text,TouchableOpacity,FlatList,StyleSheet,Image,Dimensions,Animated} from 'react-native'
 import HeaderComponent from "../components/HeaderComponent";
 import colors from '../constants/colors'
 import {LinearGradient} from 'expo-linear-gradient'
@@ -9,9 +8,12 @@ import wishListAction from '../store/actions/wishList'
 import wishListQtyAction from '../store/actions/wishListQty'
 import {useDispatch, useSelector} from 'react-redux'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import InsertScreen from "./MapData/InsertScreen";
+
+
 
 const screenWidth = Dimensions.get('screen').width
+
+
 
 const facilitiesArr = [
 
@@ -67,17 +69,18 @@ const facilitiesArr = [
 
 
 const DetailScreen = ({navigation,route}) => {
+
+   
     
     const [isInWishList, setIsInWishList] = useState(false)
 
-
-    const dispatch = useDispatch()    
+    const dispatch = useDispatch()     
     
     const wishListQtyFromRedux = useSelector(state => state.WishListQty)   //! redux
    
     let {hotel,parentScreen} = route.params
 
-  
+    
 
     
     useEffect(() => {
@@ -276,19 +279,28 @@ const FacilitiesIcons = () => {
 
             <View style = {styles.content}> 
 
-
+          
             {hotel.detailImg.map((item,index) => {
+            
                 return(
 
-                <TouchableOpacity key = {index} style = {{height:screenWidth/1.5}}>
-                    <Image style = {{width:'100%', height:'100%'}} source = {item.img2} />
-                </TouchableOpacity>
+                    <View key = {index} style = {{height:screenWidth/1.5}}>
+
+
+                        <Image style = {{width:'100%', height:'100%'}} source = {item.img3}/>
+
+
+
+                    </View>
+
+
+
 
                 )
-
-            
             })
+
             }
+
             <View style = {styles.nameAndWishListView}>
 
                 <Text style = {styles.hotelName}>{hotel.name}</Text>
@@ -380,9 +392,6 @@ const FacilitiesIcons = () => {
                 </LinearGradient>
 
 
-               
-
-              
                 </View>
 
                 </View>
@@ -444,7 +453,7 @@ const styles = StyleSheet.create({
     pernightView : {alignItems:'center',position:'absolute', left:50,top:10},
 
 
-
+    dotView : {flexDirection:'row', alignItems: 'center',marginLeft:'40%'},
 
 
 
