@@ -301,33 +301,27 @@ const HomeScreen = ({navigation,route}) => {
         </View>
     )}
 
-  
+    
 
     const searchTxtFunction = (text) => {
         
         if(text){
 
-            let newData = hotelArr.filter(item => {
+            const newData = hotelArr.filter(item => {
 
             const itemData = item.name.toLowerCase();  
         
             const textData = text.toLowerCase();
 
-              
             return itemData.indexOf(textData) > -1;
-
-                
             })
-
 
             setSearchTxt(text) 
 
             setIsInSearchTxt(false)
 
             setFilteredData(newData) 
-
-         
-
+            
         }else{
 
             setSearchTxt(text) 
@@ -361,7 +355,7 @@ const HomeScreen = ({navigation,route}) => {
 
                 
 
-                { filteredData.length == 0 &&
+                {filteredData.length == 0 &&
 
                 <View style = {{flex:1,justifyContent:'center',alignItems:'center'}}>
 

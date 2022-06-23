@@ -6,12 +6,17 @@ import colors from '../constants/colors'
 import {LinearGradient} from 'expo-linear-gradient'
 import BottomTabComponent from '../components/BottomTabComponent'
 
-
 import CurrencyModalComponent from '../components/CurrencyModalComponent'
 import NationalityModalComponent from '../components/NationalityModalComponent'
 import LanguageModalComponent from '../components/LanguageModalComponent'
 
 const screenWidth = Dimensions.get('screen').width
+
+
+
+
+
+
 
 const ProfileScreen = ({navigation,route}) => {
 
@@ -50,7 +55,7 @@ const ProfileScreen = ({navigation,route}) => {
             
             </TouchableOpacity>
 
-            <TouchableOpacity style = {[styles.iconContainer, {marginTop:15}]}>
+            <TouchableOpacity onPress={() => navigation.navigate('ReviewListScreen')} style = {[styles.iconContainer, {marginTop:15}]}>
                 
                 <Image style = {{width:25,height:25,tintColor:'#0290a6'}} source = {require('../../assets/Icons/restar.png')}/>
 

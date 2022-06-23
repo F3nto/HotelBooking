@@ -1,6 +1,7 @@
 import React,{useState} from 'react'
 import {SafeAreaView,View,Text,TouchableOpacity,StyleSheet,Image,} from 'react-native'
 import colors from '../constants/colors'
+import {LinearGradient} from 'expo-linear-gradient'
 
 import LogOutModalComponent from '../components/LogOutModalComponent'
 
@@ -15,17 +16,17 @@ return(
 
         <View style = {styles.content}>
 
-            <View style = {styles.profileContainer}>
+            <LinearGradient colors={['#24f8ff','#36899e', '#47b9bf',]} start = {{x : 0,y : 1}} end = {{x:1,y:1}} style = {styles.profileContainer}> 
 
                 <Image style = {{width:70,height:70}} source = {require('../../assets/Icons/user.png')}/>
 
                 <Text style = {styles.profileTxt}>Fento</Text>
 
-            </View>
+            </LinearGradient>
 
             <TouchableOpacity style = {styles.imgAndTxtContainer} onPress = {() => {navigation.navigate('HomeScreen')}}>
         
-                <Image style = {{width:25, height:25,}} source = {require('../../assets/Icons/home.png')}/>
+                <Image style = {{width:30, height:30}} source = {require('../../assets/Icons/home.png')}/>
 
                 <Text style = {styles.screenTxt}>Home</Text>
 
@@ -34,7 +35,7 @@ return(
             
             <TouchableOpacity style = {styles.imgAndTxtContainer} onPress = {() => {navigation.navigate('WishListScreen')}}>
         
-                <Image style = {{width:25, height:25}} source = {require('../../assets/Icons/wishlist.png')}/>
+                <Image style = {{width:30, height:30}} source = {require('../../assets/Icons/wishlist.png')}/>
 
                 <Text style = {styles.screenTxt}>WishList</Text>
 
@@ -43,7 +44,7 @@ return(
             
             <TouchableOpacity style = {styles.imgAndTxtContainer} onPress = {() => {navigation.navigate('Home')}}>
         
-                <Image style = {{width:25, height:25}} source = {require('../../assets/Icons/review.png')}/>
+                <Image style = {{width:30, height:30}} source = {require('../../assets/Icons/review.png')}/>
 
                 <Text style = {styles.screenTxt}>Reviews</Text>
 
@@ -52,7 +53,7 @@ return(
             
             <TouchableOpacity style = {styles.imgAndTxtContainer} onPress = {() => {navigation.navigate('Home')}}>
         
-                <Image style = {{width:25, height:25}} source = {require('../../assets/Icons/profile.png')}/>
+                <Image style = {{width:30, height:30}} source = {require('../../assets/Icons/profile.png')}/>
 
                 <Text style = {styles.screenTxt}>Profile</Text>
 
@@ -62,7 +63,7 @@ return(
 
             <TouchableOpacity style = {styles.imgAndTxtContainer} onPress = {() => {navigation.navigate('Home')}}>
         
-                <Image style = {{width:25, height:25}} source = {require('../../assets/Icons/contact.png')}/>
+                <Image style = {{width:30, height:30}} source = {require('../../assets/Icons/contact.png')}/>
 
                 <Text style = {styles.screenTxt}>Contact Us</Text>
 
@@ -70,7 +71,7 @@ return(
 
             <TouchableOpacity style = {styles.imgAndTxtContainer} onPress = {() => {navigation.navigate('Home')}}>
         
-                <Image style = {{width:25, height:25}} source = {require('../../assets/Icons/info.png')}/>
+                <Image style = {{width:30, height:30}} source = {require('../../assets/Icons/about.png')}/>
 
                 <Text style = {styles.screenTxt}>About Us</Text>
 
@@ -81,7 +82,7 @@ return(
             
             <TouchableOpacity style = {styles.imgAndTxtContainer} onPress = {() => setShowDialog(true)}>
         
-                <Image style = {{width:25, height:25}} source = {require('../../assets/Icons/logout.png')}/>
+                <Image style = {{width:30, height:30}} source = {require('../../assets/Icons/logout.png')}/>
 
                 <Text style = {styles.screenTxt}>Log out</Text>
 
@@ -107,15 +108,15 @@ const styles = StyleSheet.create({
     
     container : {flex:1},
 
-    content   : {flex:1,},
+    content   : {flex:1,backgroundColor:'#000'},
 
     imgAndTxtContainer : {flexDirection:'row',alignItems:'center',margin:20},
 
-    profileContainer : {backgroundColor:colors.primary,padding:20,justifyContent:'center',alignItems:'center',height:200},
+    profileContainer : {padding:20,justifyContent:'center',alignItems:'center',height:200},
 
-    profileTxt : {color:colors.white,fontSize:16,fontWeight:'bold'},
+    profileTxt : {color:'#00f2ff',fontSize:16,fontWeight:'bold'},
 
-    screenTxt : {color:colors.primary,fontSize:15,fontWeight:'bold',marginLeft:10}
+    screenTxt : {color:'#00f2ff',fontSize:15,fontWeight:'bold',marginLeft:20}
 
 
 })

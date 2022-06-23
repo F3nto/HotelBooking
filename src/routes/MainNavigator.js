@@ -4,6 +4,8 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack'
 import {createDrawerNavigator,DrawerContentScrollView} from '@react-navigation/drawer'
 import DrawerNavigator from "./DrawerNavigator";
 
+import LoginScreen from "../screens/Auth/LoginScreen";
+import SignUpScreen from "../screens/Auth/SignUpScreen";
 import HomeScreen from "../screens/HomeScreen";
 import DetailScreen from "../screens/DetailScreen";
 import BookingScreen from "../screens/BookingScreen";
@@ -22,7 +24,8 @@ import PricingScreen from "../screens/PricingScreen";
 import PropertiesPoliciesScreen from "../screens/PropertyPoliciesScreen";
 import ExtraFacilitiesScreen from "../screens/ExtraFacilitiesScreen";
 import MapView from '../map/MapView'
-import InsertScreen from "../screens/MapData/InsertScreen";
+import ReviewListScreen from "../screens/ReviewListScreen";
+import ReviewModalComponent from "../components/ReviewModalComponent";
 
 
 
@@ -54,25 +57,29 @@ const MainNavigator = () => {
         <NavigationContainer>
             <drawer.Navigator drawerContent={props => CustomDrawerContent(props)} screenOptions={{headerShown:false}}>
 
-                <drawer.Screen name = 'HomeScreen'            component={HomeScreen}/>
-                <drawer.Screen name = 'DetailScreen'          component={DetailScreen}/>
-                <drawer.Screen name = 'BookingScreen'         component={BookingScreen}/>
-                <drawer.Screen name = 'WishListScreen'        component={WishListScreen}/>
-                <drawer.Screen name = 'ProfileScreen'         component={ProfileScreen}/>
-                <drawer.Screen name = 'BookingListScreen'     component={BookingListScreen}/>
-                <drawer.Screen name = 'ContactUsScreen'       component={ContactUsScreen}/>
-                <drawer.Screen name = 'CustomerServiceScreen' component={CustomerServiceScreen}/>
-                <drawer.Screen name = 'AccommodationScreen'   component={AccommodationScreen}/>
-                <drawer.Screen name = 'HelpScreen'            component={HelpScreen}/>
-                <drawer.Screen name = 'CoronavirusScreen'     component={CoronavirusScreen}/>
-                <drawer.Screen name = 'CancellationScreen'    component={CancellationScreen}/>
-                <drawer.Screen name = 'BookingDetailScreen'   component={BookingDetailScreen}/>
-                <drawer.Screen name = 'PaymentScreen'         component={PaymentScreen}/>
-                <drawer.Screen name = 'PricingScreen'         component={PricingScreen}/>
-                <drawer.Screen name = 'PropertiesPoliciesScreen' component={PropertiesPoliciesScreen}/>
-                <drawer.Screen name = 'ExtraFacilitiesScreen'   component={ExtraFacilitiesScreen}/>
-                <drawer.Screen name = 'MapViewScreen' component={MapView}/>
-                <drawer.Screen name = 'InsertScreen' component={InsertScreen}/>
+                <drawer.Screen name = 'LoginScreen'                 component={LoginScreen}/>
+                <drawer.Screen name = 'SignUpScreen'                component={SignUpScreen}/>
+                <drawer.Screen name = 'HomeScreen'                  component={HomeScreen}/>
+                <drawer.Screen name = 'DetailScreen'                component={DetailScreen}/>
+                <drawer.Screen name = 'BookingScreen'               component={BookingScreen}/>
+                <drawer.Screen name = 'WishListScreen'              component={WishListScreen}/>
+                <drawer.Screen name = 'ProfileScreen'               component={ProfileScreen}/>
+                <drawer.Screen name = 'BookingListScreen'           component={BookingListScreen}/>
+                <drawer.Screen name = 'ContactUsScreen'             component={ContactUsScreen}/>
+                <drawer.Screen name = 'CustomerServiceScreen'       component={CustomerServiceScreen}/>
+                <drawer.Screen name = 'AccommodationScreen'         component={AccommodationScreen}/>
+                <drawer.Screen name = 'HelpScreen'                  component={HelpScreen}/>
+                <drawer.Screen name = 'CoronavirusScreen'           component={CoronavirusScreen}/>
+                <drawer.Screen name = 'CancellationScreen'          component={CancellationScreen}/>
+                <drawer.Screen name = 'BookingDetailScreen'         component={BookingDetailScreen}/>
+                <drawer.Screen name = 'PaymentScreen'               component={PaymentScreen}/>
+                <drawer.Screen name = 'PricingScreen'               component={PricingScreen}/>
+                <drawer.Screen name = 'PropertiesPoliciesScreen'    component={PropertiesPoliciesScreen}/>
+                <drawer.Screen name = 'ExtraFacilitiesScreen'       component={ExtraFacilitiesScreen}/>
+                <drawer.Screen name = 'MapViewScreen'               component={MapView}/>
+                <drawer.Screen name = 'ReviewListScreen'            component={ReviewListScreen}/>
+                <drawer.Screen name = 'ReviewModalComponent'        component={ReviewModalComponent}/>
+                
 
                 
             </drawer.Navigator>

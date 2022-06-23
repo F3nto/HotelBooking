@@ -1,25 +1,84 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {SafeAreaView,View,TouchableOpacity,Text,Image,Modal,StyleSheet,Dimensions,TextInput} from 'react-native'
 import colors from '../constants/colors'
 import {LinearGradient} from 'expo-linear-gradient'
+import bookingListAction from '../store/actions/bookingList'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import {useDispatch,useSelector} from 'react-redux'
+import reviewListAction from '../store/actions/reviewList'
+
 
 const screenWidth = Dimensions.get('screen').width
 
-const ReviewModalComponent = ({navigation,visible,disableModal}) => {
+const ReviewModalComponent = ({navigation,route}) => {
 
+    let {reviewHotel} = route.params
+
+    const dispatch = useDispatch()
+    
     const [commentTxt, setCommentTxt] = useState('')
 
     const [defaultRating , setDefaultRating] = useState(2)
     const [maxRating, setMaxRating] = useState([1,2,3,4,5])
 
+    
+
     const unFilledStar = require('../../assets/unfillstar.png')
 
     const filledStar = require('../../assets/filledstar.png')
 
+
+    const saveToReviewList = (reviewHotel) => {
+        
+
+        reviewHotel.commentTxt = commentTxt
+
+        reviewHotel.defaultRating = defaultRating
+
+        reviewHotel.maxRating = maxRating
+
+        reviewHotel.filledStar = filledStar
+
+        reviewHotel.unFilledStar = unFilledStar
+
+
+    AsyncStorage.getItem('reviewList').then((res) => {
+
+        const hotelData = JSON.parse(res)
+
+        let hotelArr = []
+
+        if(hotelData == null){
+
+            hotelArr.push(reviewHotel)
+
+            AsyncStorage.setItem('reviewList', JSON.stringify(hotelArr))
+            dispatch(reviewListAction.addToReviewList(hotelArr))
+
+
+        }else{
+
+
+            hotelData.push(reviewHotel)
+
+            AsyncStorage.setItem('reviewList', JSON.stringify(hotelData))
+            dispatch(reviewListAction.addToReviewList(hotelData))
+
+        }
+
+    }) 
+
+    .catch((error) => {
+
+
+        console.log(error)
+
+
+    })
+    
+    }
+
     return(
-
-        <Modal transparent = {true} animationType = 'fade' visible = {visible}>
-
 
         <View style = {styles.container}>
 
@@ -33,14 +92,21 @@ const ReviewModalComponent = ({navigation,visible,disableModal}) => {
 
         <View style = {styles.starImgContainer}>
 
+            
+
             {maxRating.map((item,index) => {
+
+        
 
                 return(
 
-                    <TouchableOpacity onPress={() => setDefaultRating(item)} activeOpacity={0.7} key = {index}>
+                    <TouchableOpacity onPress={() => {setDefaultRating(item)}} key = {index}>
 
-                        <Image style = {{width:25,height:25}} source = {item <= defaultRating ? filledStar : unFilledStar}/>
+                     
+                            
+                        <Image  style = {{width:25,height:25}} source = {item <= defaultRating ? filledStar : unFilledStar}/>
 
+                       
 
                     </TouchableOpacity>
                 )
@@ -49,27 +115,31 @@ const ReviewModalComponent = ({navigation,visible,disableModal}) => {
 
             }
 
+            
+
         </View>
 
         <View style = {styles.txtInputContainer}>
 
-        <TextInput
-        
-        placeholder='Comment here...'
-        
-        value={commentTxt}
-        
-        onChangeText = {text => setCommentTxt(text)}
+            <TextInput
+            
+            placeholder='Comment here...'
+            
+            value={commentTxt}
+            
+            onChangeText = {text => setCommentTxt(text)}
 
-        
-        />
+            multiline = {true}
+
+            
+            />
 
         </View>
         
 
             <View style = {styles.bottomOuterContainer}>
 
-            <TouchableOpacity onPress={() => {disableModal()}}>
+            <TouchableOpacity onPress={() => navigation.navigate('BookingListScreen')}>
                 
                 <LinearGradient colors={['#18c1c9','#3df5ff', '#c9fbff',]} start = {{x : 0,y : 0}} end = {{x:1,y:1}} style = {styles.bottomInnerContainer}>
 
@@ -79,7 +149,7 @@ const ReviewModalComponent = ({navigation,visible,disableModal}) => {
 
             </TouchableOpacity>
 
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => {navigation.navigate('BookingListScreen'), saveToReviewList(reviewHotel)}}>
 
                 <LinearGradient colors={['#18c1c9','#3df5ff', '#c9fbff',]} start = {{x : 0,y : 0}} end = {{x:1,y:1}} style = {styles.bottomInnerContainer}>
 
@@ -98,7 +168,7 @@ const ReviewModalComponent = ({navigation,visible,disableModal}) => {
         </View>
 
 
-        </Modal> 
+       
 
     )
 

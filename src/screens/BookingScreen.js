@@ -24,8 +24,6 @@ let genderArr = [
   'Ms'
 ]
 
-
-
 const BookingScreen = ({navigation,route}) => {
 
     let {hotel} = route.params
@@ -180,6 +178,8 @@ const BookingScreen = ({navigation,route}) => {
     }
 
     const plusChild = () => {setChildCount(childCount + 1)}
+    
+    
 
     const minusChild = () => {
 
@@ -272,6 +272,9 @@ const BookingScreen = ({navigation,route}) => {
 
     setCheckinDateShow('');         //! wanna be init textfield blur 
     setCheckoutDateShow('');         //! wanna be init textfield blur
+
+    setCheckInDate(new Date())
+    setCheckOutDate(new Date())
     
     setFirstName('');               //! wanna be init textfield blur
     setLastName('');                 //! wanna be init textfield blur
@@ -320,6 +323,26 @@ const BookingScreen = ({navigation,route}) => {
        
      )
          
+     }
+
+
+     const  checkOutHandlerToast = () => {
+
+        ToastAndroid.showWithGravityAndOffset(
+ 
+            "Please fill check in date first!!!",
+             ToastAndroid.LONG,
+             ToastAndroid.BOTTOM,
+             25,
+             50,
+     
+           
+         )
+
+
+
+
+
      }
 
   
@@ -391,6 +414,25 @@ const BookingScreen = ({navigation,route}) => {
 
       
     }
+
+    const checkoutHandler = () => {
+
+        if(checkinDateShow != ''){
+
+            showCheckOutDatePicker()            
+            setIsFocusedCheckOutDate(true)
+
+        }else{
+
+            setIsFocusedCheckOutDate(false)
+
+            checkOutHandlerToast()
+
+
+        }
+
+    
+    }
    
 
 return(
@@ -429,7 +471,7 @@ return(
                     <TextInput
                     
                     style = {[styles.emailtextInput, {borderColor: isFocusedEmail ? '#73c7ff' :  '#ffa3a3', shadowColor:isFocusedEmail ? '#0ac0fc' : '#fc6868', elevation:15,shadowOpacity:0.5,shadowRadius:5}]}
-                    placeholder='Email address'
+                    placeholder='Email address(*required)'
                     autoComplete = {false}
                     keyboardType = 'email-address'
 
@@ -616,7 +658,7 @@ return(
             <View style = {styles.dateContainer}>
 
                 <TextInput
-                style = {[styles.dateTxtInput, {borderColor: isFocusedCheckOutDate ? '#73c7ff' : '#ffa3a3',shadowColor:isFocusedCheckOutDate ? '#03afff' :  '#ff0303',elevation:15}]}
+                style = {[styles.dateTxtInput, {borderColor: isFocusedCheckOutDate ? '#73c7ff' : '#ffa3a3'}]}
                 
                 placeholder = 'Check-out date(*required)'
                 value={checkoutDateShow}
@@ -627,13 +669,12 @@ return(
 
                 />
 
-                <TouchableOpacity onPress={() => {showCheckOutDatePicker(), setIsFocusedCheckOutDate(true)}}>
+                <TouchableOpacity onPress={() => checkoutHandler()}>
                     
                     <Image style = {{width:35,height:35,marginLeft:20,marginTop:10}} source = {require('../../assets/Icons/calendar.png')} />
                     
                 </TouchableOpacity>
 
-               
 
             </View>   
   
@@ -660,7 +701,9 @@ return(
                       display = 'default'
                       onChange={onChangeCheckOut}
                       minimumDate={checkInDate}
+                      
 
+            
             />
             }
 

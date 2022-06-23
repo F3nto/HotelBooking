@@ -8,15 +8,12 @@ import BottomTabComponent from '../components/BottomTabComponent'
 import bookingListAction from '../store/actions/bookingList'
 import bookingQtyAction from '../store/actions/bookingQty'
 import { useDispatch,useSelector } from 'react-redux'
-
 import ReviewModalComponent from '../components/ReviewModalComponent'
 
 
 const screenWidth = Dimensions.get('screen').width
 
 const BookingListScreen = ({navigation,route}) => {
-
-    const [showReviewDialog, setShowReviewDialog] = useState(false)
 
     const dispatch = useDispatch()
 
@@ -203,7 +200,7 @@ const BookingListScreen = ({navigation,route}) => {
                         :
 
 
-                            <Text>Welcom Ms...</Text>
+                            <Text>Welcome Ms...</Text>
                         }
 
                         <Text style = {styles.firstAndLastTxt}>{item.firstName} {item.lastName}</Text>
@@ -226,7 +223,7 @@ const BookingListScreen = ({navigation,route}) => {
 
                     </TouchableOpacity>
                         
-                    <TouchableOpacity onPress={() => {setShowReviewDialog(true)}}>
+                    <TouchableOpacity onPress={() => navigation.navigate('ReviewModalComponent', {reviewHotel : item})}>
 
                     <LinearGradient colors={['#18c1c9','#3df5ff', '#c9fbff',]} start = {{x : 0,y : 0}} end = {{x:0.8,y:0}} style = {styles.reviewContainer}> 
 
@@ -276,9 +273,6 @@ const BookingListScreen = ({navigation,route}) => {
             
             
             }
-
-            
-            <ReviewModalComponent navigation={navigation} visible = {showReviewDialog} disableModal = {() => setShowReviewDialog(false)} />
 
             </View>
 

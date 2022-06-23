@@ -5,9 +5,12 @@ import HeaderComponent from '../components/HeaderComponent';
 import TopTabComponent from '../components/TopTabComponent';
 
 
-const CustomerServiceScreen = ({navigation,route}) => {
+const CustomerServiceScreen = ({navigation,route}) => {        
+
+    
 
     return(
+
         <SafeAreaView style = {styles.container}>
 
             <HeaderComponent navigation={navigation} title = 'Customer Services' icon = 'back' parentScreenName={'ProfileScreen'}/>
