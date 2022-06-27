@@ -1,15 +1,15 @@
 import React,{useEffect} from 'react'
 import {SafeAreaView,View,Text,TouchableOpacity,Image,FlatList,StyleSheet} from 'react-native'
 import colors from '../constants/colors'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import HeaderComponent from '../components/HeaderComponent'
 import reviewListAction from '../store/actions/reviewList'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useDispatch,useSelector } from 'react-redux'
 
 
 const ReviewListScreen = ({navigation, route}) => {
 
-    
+   
 
     const reviewHotel = useSelector(state => state.ReviewList)
 

@@ -1,5 +1,6 @@
 import React, {useState,useEffect} from "react";
 import {SafeAreaView,View,Text,TouchableOpacity,FlatList,StyleSheet,Image,Dimensions,Animated} from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import HeaderComponent from "../components/HeaderComponent";
 import colors from '../constants/colors'
 import {LinearGradient} from 'expo-linear-gradient'
@@ -7,7 +8,7 @@ import {LinearGradient} from 'expo-linear-gradient'
 import wishListAction from '../store/actions/wishList'
 import wishListQtyAction from '../store/actions/wishListQty'
 import {useDispatch, useSelector} from 'react-redux'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+
 
 
 
@@ -70,7 +71,6 @@ const facilitiesArr = [
 
 const DetailScreen = ({navigation,route}) => {
 
-   
     
     const [isInWishList, setIsInWishList] = useState(false)
 

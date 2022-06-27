@@ -4,14 +4,15 @@ import HeaderComponent from '../components/HeaderComponent'
 import colors from '../constants/colors'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import BottomTabComponent from '../components/BottomTabComponent'
-
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useDispatch,useSelector } from 'react-redux'
 import wishListAction from '../store/actions/wishList'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+
 
 
 
 const WishListScreen = ({navigation,route}) => {
+
 
     const dispatch = useDispatch()
 

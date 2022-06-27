@@ -8,7 +8,7 @@ import BottomTabComponent from '../components/BottomTabComponent'
 import bookingListAction from '../store/actions/bookingList'
 import bookingQtyAction from '../store/actions/bookingQty'
 import { useDispatch,useSelector } from 'react-redux'
-import ReviewModalComponent from '../components/ReviewModalComponent'
+
 
 
 const screenWidth = Dimensions.get('screen').width

@@ -1,20 +1,80 @@
 import React,{useState,useEffect} from 'react'
-import {ScrollView,SafeAreaView,View,Text,TouchableOpacity,Image,StyleSheet,Dimensions,TextInput,StatusBar} from 'react-native'
+import {ScrollView,SafeAreaView,View,Text,TouchableOpacity,Image,StyleSheet,Dimensions,TextInput,StatusBar,ToastAndroid} from 'react-native'
 import colors from '../../constants/colors'
 import {LinearGradient} from 'expo-linear-gradient'
 import {Input} from 'react-native-elements'
+import { auth } from './firebase/firebase'
+
+
 
 const screenWidth = Dimensions.get('screen').width
 const screenHeight = Dimensions.get('screen').height
 
 const LoginScreen = ({navigation, route}) => {
 
+
+
     const [email, setEmail] = useState('')
     const [pass,  setPass] = useState('')
 
     const [isSecurePassword, setIsSecurePassword] = useState(true)
 
-    
+ 
+    const handleSignIn = () => {
+
+        auth.
+        signInWithEmailAndPassword(email,pass) 
+        .then(credentials => {
+
+
+            const user = credentials.user
+
+            console.log('Sign in with....', user.email)
+
+            successSignIn()
+
+            navigation.navigate('Drawer')
+
+        })
+
+        .catch((error) => console.log('Sign in error....', error))
+
+    }
+
+    const successSignIn = () => {
+
+        ToastAndroid.showWithGravityAndOffset(
+
+            "Sign in Successful!!!",
+
+            ToastAndroid.LONG,
+            ToastAndroid.BOTTOM,  
+            25,
+            50
+
+
+        )
+    }
+
+
+       
+    // const unSuccessSignIn = () => {
+
+    //     ToastAndroid.showWithGravityAndOffset(
+
+    //         "Sign in Successful!!!",
+
+    //         ToastAndroid.LONG,
+    //         ToastAndroid.BOTTOM,
+    //         25,
+    //         50
+
+
+    //     )
+    // }
+  
+
+ 
     return(
     
         <SafeAreaView style = {styles.container}>
@@ -33,6 +93,8 @@ const LoginScreen = ({navigation, route}) => {
             inputContainerStyle = {styles.inputStyle}
 
             placeholder='Email'
+
+            keyboardType='email-address'
 
             rightIcon = {<Image style = {{width:25,height:25}} source = {require('../../../assets/logemail.png')}/>}
             
@@ -79,7 +141,7 @@ const LoginScreen = ({navigation, route}) => {
             
             />
 
-            <TouchableOpacity style = {styles.loginContainer}>
+            <TouchableOpacity onPress={() => handleSignIn()} style = {styles.loginContainer}>
 
                 <Text style = {styles.loginTxt}>Sign in</Text>
 
@@ -104,10 +166,6 @@ const LoginScreen = ({navigation, route}) => {
             </LinearGradient>
 
         
-                
-                
-                
-
             </View>
 
         </SafeAreaView>
@@ -128,7 +186,7 @@ const styles = StyleSheet.create({
 
     inputStyle : {borderWidth:1,borderColor:'#128a8c',borderRadius:10,marginLeft:20,marginRight:20,paddingLeft:10,paddingRight:10,backgroundColor:colors.white,shadowColor:'#ff00dd',elevation:10,shadowRadius:30},
 
-    loginContainer : {justifyContent:'center',alignItems:'center',padding:10,backgroundColor:'#026e70',width:screenWidth/1.3,borderRadius:10},
+    loginContainer : {justifyContent:'center',alignItems:'center',padding:10,backgroundColor:'#026e70',width:screenWidth/1.2,borderRadius:10},
 
     loginTxt : {fontSize:16,fontWeight:'bold',color:colors.white},
 

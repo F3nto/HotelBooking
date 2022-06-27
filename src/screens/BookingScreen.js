@@ -1,13 +1,11 @@
 import React,{useState,useEffect,useRef} from 'react';
 import {SafeAreaView,View,Text,TextInput,TouchableOpacity,StyleSheet,Dimensions,Image,Modal,Platform,StatusBar,ImageBackground,ScrollView,ToastAndroid} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Picker } from '@react-native-picker/picker';
 import DatePicker from '@react-native-community/datetimepicker';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import bookingListAction from '../store/actions/bookingList';
 import bookingQtyAction from '../store/actions/bookingQty';
-
 import PhoneInput from 'react-native-phone-number-input'
-
 import { useDispatch } from 'react-redux';
 import HeaderComponent from '../components/HeaderComponent';
 import colors from '../constants/colors'
@@ -326,7 +324,7 @@ const BookingScreen = ({navigation,route}) => {
      }
 
 
-     const  checkOutHandlerToast = () => {
+     const checkOutHandlerToast = () => {
 
         ToastAndroid.showWithGravityAndOffset(
  
@@ -339,11 +337,7 @@ const BookingScreen = ({navigation,route}) => {
            
          )
 
-
-
-
-
-     }
+        }
 
   
     

@@ -51,14 +51,12 @@ const CustomDrawerContent = props => {
 
 
 
-const MainNavigator = () => {
+const DrawerNavigation = () => {
     return(
 
-        <NavigationContainer>
+ 
             <drawer.Navigator drawerContent={props => CustomDrawerContent(props)} screenOptions={{headerShown:false}}>
 
-                <drawer.Screen name = 'LoginScreen'                 component={LoginScreen}/>
-                <drawer.Screen name = 'SignUpScreen'                component={SignUpScreen}/>
                 <drawer.Screen name = 'HomeScreen'                  component={HomeScreen}/>
                 <drawer.Screen name = 'DetailScreen'                component={DetailScreen}/>
                 <drawer.Screen name = 'BookingScreen'               component={BookingScreen}/>
@@ -83,8 +81,33 @@ const MainNavigator = () => {
 
                 
             </drawer.Navigator>
-        </NavigationContainer>
+        
     )
+}
+
+
+
+const MainNavigator = () => {
+
+    return(
+
+    <NavigationContainer>
+
+        <stack.Navigator screenOptions={{headerShown : false}}>
+
+            <stack.Screen name = 'LoginScreen'   component={LoginScreen}/>
+
+            <stack.Screen name = 'SignUpScreen'  component={SignUpScreen}/>
+
+            <stack.Screen name = 'Drawer'        component={DrawerNavigation}/>
+
+        </stack.Navigator>
+
+    </NavigationContainer>
+
+    )
+
+
 }
 
 export default MainNavigator;
