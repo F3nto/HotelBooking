@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useDispatch,useSelector } from 'react-redux'
 import bookingQtyAction from '../store/actions/bookingQty'
 import wishListQtyAction from '../store/actions/wishListQty'
+import {LinearGradient} from 'expo-linear-gradient'
 
 
 
@@ -78,15 +79,15 @@ return(
 
         <TouchableOpacity style = {styles.innerView} onPress = {() => {navigation.navigate('HomeScreen')}}>
 
-            <Image style = {[styles.imgStyle, {tintColor : screenName == 'Home' ? '#039ba1' : colors.grey}]} source = {require('../../assets/Icons/bthome.png')}/>
+            <Image style = {[styles.imgStyle, {tintColor : screenName == 'Home' ? '#13332c' : colors.grey}]} source = {require('../../assets/Icons/bthome.png')}/>
 
-            <Text style = {{color: screenName == 'Home' ? '#039ba1' : colors.grey}}>Home</Text>
+            <Text style = {{color: screenName == 'Home' ? colors.txt : colors.grey}}>Home</Text>
 
         </TouchableOpacity>
 
         <TouchableOpacity onPress = {() => {navigation.navigate('WishListScreen')}} style = {styles.innerView}>
 
-            <Image style = {[styles.imgStyle, {tintColor : screenName == 'WishList' ? '#039ba1' : colors.grey}]} source = {require('../../assets/Icons/btwishlist.png')} />
+            <Image style = {[styles.imgStyle, {tintColor : screenName == 'WishList' ? '#13332c' : colors.grey}]} source = {require('../../assets/Icons/btwishlist.png')} />
 
             {wishListQty != 0 &&
 
@@ -98,22 +99,22 @@ return(
 
             } 
 
-            <Text style = {{color: screenName == 'WishList' ? '#039ba1' : colors.grey}}>WishList</Text>
+            <Text style = {{color: screenName == 'WishList' ? colors.txt : colors.grey}}>WishList</Text>
 
         </TouchableOpacity>
 
 
         <TouchableOpacity onPress={() => {navigation.navigate('ProfileScreen')}} style = {styles.innerView}>
 
-            <Image style = {[styles.imgStyle, {tintColor : screenName == 'Profile' ? '#0393a3' : colors.grey}]} source = {require('../../assets/Icons/btuser.png')} />
+            <Image style = {[styles.imgStyle, {tintColor : screenName == 'Profile' ? '#13332c' : colors.grey}]} source = {require('../../assets/Icons/btuser.png')} />
 
-            <Text style = {{color: screenName == 'Profile' ? '#039ba1' : colors.grey}}>Profile</Text>
+            <Text style = {{color: screenName == 'Profile' ? colors.txt : colors.grey}}>Profile</Text>
 
         </TouchableOpacity>
 
         <TouchableOpacity onPress = {() => {navigation.navigate('BookingListScreen')}} style = {styles.innerView}>
 
-            <Image style = {[styles.imgStyle, {tintColor : screenName == 'BookingList' ? '#039ba1' : colors.grey}]} source = {require('../../assets/Icons/btbooking.png')}/>
+            <Image style = {[styles.imgStyle, {tintColor : screenName == 'BookingList' ? '#13332c' : colors.grey}]} source = {require('../../assets/Icons/btbooking.png')}/>
 
             {bookingQty != 0 &&
 
@@ -125,7 +126,7 @@ return(
 
             } 
 
-            <Text style = {{color: screenName == 'BookingList' ? '#039ba1' : colors.grey}}>Booking List</Text>
+            <Text style = {{color: screenName == 'BookingList' ? colors.txt : colors.grey}}>Booking List</Text>
 
         </TouchableOpacity>
 
@@ -146,13 +147,12 @@ const styles = StyleSheet.create({
 
     showQtyView : {position:'absolute',top:-5,right:0,
                    borderRadius:11,marginRight:17,
-                   width:22,height:22,
-                   justifyContent:'center',alignItems:'center',
-                   backgroundColor:'#699c03',
+                   width:22,height:22,justifyContent:'center',alignItems:'center',
+                   backgroundColor:'#00b3a7',
                 
                 },
 
-    qtyTxt : {fontSize:12,fontWeight:'bold',color:colors.white}
+    qtyTxt : {fontSize:14,fontWeight:'bold',color:colors.white}
 
 
 })

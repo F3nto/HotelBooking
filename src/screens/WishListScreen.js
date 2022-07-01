@@ -127,11 +127,19 @@ return(
 
         :
 
-        <View style = {{flex:1, justifyContent:'center', alignItems:'center'}}>
+        <View style = {{flex:1,justifyContent:'center', alignItems:'center'}}>
 
-            <Text>There is no wishListData!!!!</Text>
+        <View style = {{width:150,height:150}}>
+
+            <Image style = {{width:'100%', height:'100%'}} source = {require('../../assets/seee-dog.webp')}/>
 
         </View>
+
+        <Text style = {{fontSize:16, fontWeight:'bold', color:colors.txt, marginTop:10}}>There is no wish list data.</Text>
+
+
+    </View>
+    
         }
 
         </View>
@@ -147,7 +155,7 @@ const styles = StyleSheet.create({
     
     container :  {flex:1},
 
-    content :  {flex:1,},
+    content :  {flex:1,backgroundColor:colors.white},
 
     cardContainer : {flexDirection:'row',alignItems:'center',backgroundColor:'#f0fffe',height:170,padding:10,marginTop:10,marginLeft:10,marginRight:10,borderRadius:10},
 

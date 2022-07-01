@@ -265,7 +265,13 @@ const BookingListScreen = ({navigation,route}) => {
             
             <View style = {{flex:1,justifyContent:'center', alignItems:'center'}}>
 
-                <Text>There is no Data in your booking list!!!</Text>
+                <View style = {{width:150,height:150}}>
+
+                    <Image style = {{width:'100%', height:'100%'}} source = {require('../../assets/seee-dog.webp')}/>
+
+                </View>
+
+                <Text style = {{fontSize:16, fontWeight:'bold', color:colors.txt, marginTop:10}}>There is no booking list data.</Text>
 
 
             </View>
@@ -286,7 +292,7 @@ const styles = StyleSheet.create({
 
     container : {flex:1},
 
-    content : {flex:1},
+    content : {flex:1,backgroundColor:colors.white},
 
     cardContainer : {backgroundColor:colors.white,borderRadius:10,margin:7,height:380},
 

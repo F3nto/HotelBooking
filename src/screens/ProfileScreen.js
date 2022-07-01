@@ -5,20 +5,23 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import colors from '../constants/colors'
 import {LinearGradient} from 'expo-linear-gradient'
 import BottomTabComponent from '../components/BottomTabComponent'
-
+import {auth} from './Auth/firebase/firebase'
+import firebase from 'firebase'
 import CurrencyModalComponent from '../components/CurrencyModalComponent'
 import NationalityModalComponent from '../components/NationalityModalComponent'
 import LanguageModalComponent from '../components/LanguageModalComponent'
+import SignOutModalComponent from '../components/SignOutModalComponent'
+import { useSelector } from 'react-redux'
 
 const screenWidth = Dimensions.get('screen').width
 
 
 
-
-
-
-
 const ProfileScreen = ({navigation,route}) => {
+
+
+    const userName = useSelector(state => state.Auth)
+
 
     const [ showCurrencyDialog, setShowCurrencyDialog ] = useState(false)
     const [ curren, setCurren ] = useState('')
@@ -28,6 +31,8 @@ const ProfileScreen = ({navigation,route}) => {
 
     const [showLanDialog, setShowLanDialog] = useState(false)
     const [language, setLanguage] = useState('')
+
+    const [showSignOutDialog, setShowSignOutDialog] = useState(false)
 
 
     return(
@@ -42,7 +47,7 @@ const ProfileScreen = ({navigation,route}) => {
           
                 <Image style = {{width:80,height:80,borderRadius:70}} source= {require('../../assets/tor.jpg')}/>
                 
-                <Text style = {styles.pfName}>Pyae Sone Tun</Text>
+                <Text style = {styles.pfName}>{userName}</Text>
                 <Text style = {styles.pfEmail}>fento99999@gmail.com</Text>
 
             </LinearGradient>
@@ -135,11 +140,11 @@ const ProfileScreen = ({navigation,route}) => {
 
             <View style = {{width:screenWidth/1.2,marginLeft:20,marginTop:15,height:1,backgroundColor:'#0290a6'}}/>
             
-            <TouchableOpacity style = {[styles.iconContainer, {marginTop:15,marginBottom:15}]}>
+            <TouchableOpacity onPress={() => setShowSignOutDialog(true)} style = {[styles.iconContainer, {marginTop:15,marginBottom:15}]}>
 
                 <Image style = {{width:25,height:25,tintColor:'#e61902'}} source = {require('../../assets/Icons/log-out.png')}/>
 
-                <Text style = {[styles.pfTxt,{color:'#e61902'}]}>Log Out</Text>
+                <Text style = {[styles.pfTxt,{color:'#e61902'}]}>Sign Out</Text>
 
             </TouchableOpacity>
 
@@ -155,11 +160,14 @@ const ProfileScreen = ({navigation,route}) => {
             <LanguageModalComponent navigation={navigation} visible= {showLanDialog}
             outLanHandler = {() => {setShowLanDialog(false)}}
             onPressFun = {(data) => {setLanguage(data)}}/>
+
+            <SignOutModalComponent navigation={navigation} visible = {showSignOutDialog} outHandler = {() => setShowSignOutDialog(false)}/>
             
         </View>
         </ScrollView>
 
         <BottomTabComponent navigation={navigation} screenName = 'Profile'/>
+
         </SafeAreaView>
 
     )

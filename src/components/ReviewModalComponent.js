@@ -27,9 +27,13 @@ const ReviewModalComponent = ({navigation,route}) => {
 
     const filledStar = require('../../assets/filledstar.png')
 
+    const userName = useSelector(state => state.Auth)
+
 
     const saveToReviewList = (reviewHotel) => {
-        
+
+
+        reviewHotel.userName = userName
 
         reviewHotel.commentTxt = commentTxt
 

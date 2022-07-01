@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {NavigationContainer} from '@react-navigation/native'
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
 import {createDrawerNavigator,DrawerContentScrollView} from '@react-navigation/drawer'
@@ -26,6 +26,7 @@ import ExtraFacilitiesScreen from "../screens/ExtraFacilitiesScreen";
 import MapView from '../map/MapView'
 import ReviewListScreen from "../screens/ReviewListScreen";
 import ReviewModalComponent from "../components/ReviewModalComponent";
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 
@@ -89,17 +90,36 @@ const DrawerNavigation = () => {
 
 const MainNavigator = () => {
 
+    const [isUser, setIsUser] = useState(false)
+
+ 
+        AsyncStorage.getItem('userInfo').then((res) => {
+
+        const credentialUser = JSON.parse(res)
+
+        if(credentialUser != null){
+
+            setIsUser(true)
+
+
+        }
+
+    })
+
+  
+
+
     return(
 
     <NavigationContainer>
 
-        <stack.Navigator screenOptions={{headerShown : false}}>
+        <stack.Navigator screenOptions={{headerShown : false}} >
 
-            <stack.Screen name = 'LoginScreen'   component={LoginScreen}/>
+        {!isUser &&  <stack.Screen name = 'LoginScreen'   component={LoginScreen}/> }  
 
-            <stack.Screen name = 'SignUpScreen'  component={SignUpScreen}/>
+        {!isUser &&  <stack.Screen name = 'SignUpScreen'  component={SignUpScreen}/> }  
 
-            <stack.Screen name = 'Drawer'        component={DrawerNavigation}/>
+            <stack.Screen name = 'Drawer'  component={DrawerNavigation}/>
 
         </stack.Navigator>
 

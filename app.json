@@ -1,14 +1,15 @@
 {
   "expo": {
-    "name": "HotelBooking",
+    "name": "Hot Book",
     "slug": "HotelBooking",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "image": "./assets/hotelsplash2.jpg",
+      "resizeMode" : "cover"
+     
+      
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -21,7 +22,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/hotelapplogo.jpg",
         "backgroundColor": "#FFFFFF"
       }
     },

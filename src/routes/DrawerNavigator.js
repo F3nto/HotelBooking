@@ -2,6 +2,7 @@ import React,{useState} from 'react'
 import {SafeAreaView,View,Text,TouchableOpacity,StyleSheet,Image,} from 'react-native'
 import colors from '../constants/colors'
 import {LinearGradient} from 'expo-linear-gradient'
+import { useSelector } from 'react-redux'
 
 import LogOutModalComponent from '../components/LogOutModalComponent'
 
@@ -9,6 +10,8 @@ import LogOutModalComponent from '../components/LogOutModalComponent'
 const DrawerNavigator = ({navigation}) => {
 
 const [showDialog, setShowDialog] = useState(false)
+
+const userName = useSelector(state => state.Auth)
 
 return(
 
@@ -18,9 +21,9 @@ return(
 
             <LinearGradient colors={['#24f8ff','#36899e', '#47b9bf',]} start = {{x : 0,y : 1}} end = {{x:1,y:1}} style = {styles.profileContainer}> 
 
-                <Image style = {{width:70,height:70}} source = {require('../../assets/Icons/user.png')}/>
+                <Image style = {{width:80,height:80,borderRadius:70}} source = {require('../../assets/tor.jpg')}/>
 
-                <Text style = {styles.profileTxt}>Fento</Text>
+                <Text style = {styles.profileTxt}>{userName}</Text>
 
             </LinearGradient>
 
@@ -42,7 +45,7 @@ return(
             </TouchableOpacity>
 
             
-            <TouchableOpacity style = {styles.imgAndTxtContainer} onPress = {() => {navigation.navigate('Home')}}>
+            <TouchableOpacity style = {styles.imgAndTxtContainer} onPress = {() => {navigation.navigate('ReviewListScreen')}}>
         
                 <Image style = {{width:30, height:30}} source = {require('../../assets/Icons/review.png')}/>
 
@@ -51,7 +54,7 @@ return(
             </TouchableOpacity>
 
             
-            <TouchableOpacity style = {styles.imgAndTxtContainer} onPress = {() => {navigation.navigate('Home')}}>
+            <TouchableOpacity style = {styles.imgAndTxtContainer} onPress = {() => {navigation.navigate('ProfileScreen')}}>
         
                 <Image style = {{width:30, height:30}} source = {require('../../assets/Icons/profile.png')}/>
 
@@ -61,7 +64,7 @@ return(
 
             <View style = {{width:'80%', height:2, backgroundColor:colors.primary,marginLeft:20}}/>
 
-            <TouchableOpacity style = {styles.imgAndTxtContainer} onPress = {() => {navigation.navigate('Home')}}>
+            <TouchableOpacity style = {styles.imgAndTxtContainer} onPress = {() => {navigation.navigate('ContactUsScreen')}}>
         
                 <Image style = {{width:30, height:30}} source = {require('../../assets/Icons/contact.png')}/>
 

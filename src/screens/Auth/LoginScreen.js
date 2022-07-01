@@ -5,8 +5,6 @@ import {LinearGradient} from 'expo-linear-gradient'
 import {Input} from 'react-native-elements'
 import { auth } from './firebase/firebase'
 
-
-
 const screenWidth = Dimensions.get('screen').width
 const screenHeight = Dimensions.get('screen').height
 
@@ -37,7 +35,10 @@ const LoginScreen = ({navigation, route}) => {
 
         })
 
-        .catch((error) => console.log('Sign in error....', error))
+        .catch(error => alert(error.massage))
+        
+
+        
 
     }
 
@@ -58,20 +59,20 @@ const LoginScreen = ({navigation, route}) => {
 
 
        
-    // const unSuccessSignIn = () => {
+    const unSuccessSignIn = () => {
 
-    //     ToastAndroid.showWithGravityAndOffset(
+        ToastAndroid.showWithGravityAndOffset(
 
-    //         "Sign in Successful!!!",
+            "Sign in Successful!!!",
 
-    //         ToastAndroid.LONG,
-    //         ToastAndroid.BOTTOM,
-    //         25,
-    //         50
+            ToastAndroid.SHORT,
+            ToastAndroid.BOTTOM,
+            25,
+            50
 
 
-    //     )
-    // }
+        )
+    }
   
 
  

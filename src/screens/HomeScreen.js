@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import {SafeAreaView,View,Text,TouchableOpacity,StyleSheet,FlatList,Image,Dimensions,TextInput,ScrollView} from 'react-native'
+import React, { useState, useEffect } from "react";
+import {SafeAreaView,View,Text,TouchableOpacity,StyleSheet,FlatList,Image,Dimensions,TextInput,ScrollView,BackHandler} from 'react-native'
 import {SearchBar} from 'react-native-elements'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import HeaderComponent from "../components/HeaderComponent";
@@ -301,6 +301,24 @@ const HomeScreen = ({navigation,route}) => {
         </View>
     )}
 
+
+    useEffect(() => {
+
+        
+    const backAction = () => {
+
+        return true;
+
+    };
+
+    const backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        backAction
+    );
+  
+    return () => backHandler.remove();
+
+    }, [])
     
 
     const searchTxtFunction = (text) => {

@@ -1,11 +1,14 @@
 import { SafeAreaView,StyleSheet, Text, View, Image ,TouchableOpacity,ToastAndroid} from 'react-native'
 import React,{useState,useEffect} from 'react'
 import HeaderComponent from '../../components/HeaderComponent'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import authAction from '../../store/actions/auth'
 import {Input} from 'react-native-elements'
 import colors from '../../constants/colors'
 import {LinearGradient} from 'expo-linear-gradient'
 import { auth } from './firebase/firebase'
-import {createUserWithEmailAndPassword} from 'firebase/auth'
+import {useDispatch,useSelector} from 'react-redux'
+
 
 const SignUpScreen = ({navigation,route}) => {
 
@@ -16,6 +19,12 @@ const SignUpScreen = ({navigation,route}) => {
 
     const [isSecurePassword, setIsSecurePassword] = useState(true)
     const [isSecureRePassword, setIsSecureRePassword] = useState(true)
+
+    const [emailValid, setEmailValid]   = useState('')
+    const [passValid, setPassValid]     = useState('')
+    const [rePassValid, setRePassValid] = useState('')
+
+    const dispatch = useDispatch()
 
 
      const successRegister = () => {
@@ -59,10 +68,11 @@ const SignUpScreen = ({navigation,route}) => {
 
     }
 
+ 
 
     const handleSignUp = () => {
 
-      if(name != '' && email != '' && pass != '' && rePass != ''){
+    if(name != '' && emailValid == '' && passValid == '' && rePassValid == ''){
 
       auth.createUserWithEmailAndPassword(email,pass)
       .then(credentials => {
@@ -71,13 +81,41 @@ const SignUpScreen = ({navigation,route}) => {
         
         console.log('Sign up with.....' , user.email)
 
+        
+
+        AsyncStorage.getItem('userInfo').then((res) => {
+
+        const responseData = JSON.parse(res)
+
+        if(responseData == null){
+
+          let userName = []
+
+          userName.push(name)
+
+          AsyncStorage.setItem('userInfo', JSON.stringify(userName))
+          dispatch(authAction.addToAuth(userName))
+
+        }else{
+
+          responseData.push(name)
+
+          AsyncStorage.setItem('userInfo', JSON.stringify(responseData))
+          dispatch(authAction.addToAuth(responseData))
+
+
+        }
+
+        })
+     
+        
         successRegister()
 
-        navigation.navigate('LoginScreen')
+        navigation.navigate('Drawer')
 
       })
 
-      .catch((error) => {console.log('Sign up error....', error)})
+      .catch((error) => alert(error.massage))
 
     }else {
 
@@ -91,7 +129,53 @@ const SignUpScreen = ({navigation,route}) => {
     }
 
 
-     
+    const emailValidation = (value) => {
+
+      let emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+
+      if(emailPattern.test(value) === false){
+
+        setEmailValid('Please Enter Valid Email Address!')
+
+      }else{
+ 
+        setEmailValid('')
+
+
+      }
+
+    }
+
+    const passwordValidation = (value) => {
+
+      if(value.length < 6){
+
+        setPassValid('Please Enter at least 6 characters')
+
+
+      }else{
+
+        setPassValid('')
+
+
+      }
+
+    }
+
+    const rePassValidation = (value) => {
+
+      if(value == pass){
+
+        setRePassValid('')
+
+
+      }else{
+
+        setRePassValid('Please Enter the same password')
+
+
+      }
+    }
 
 
 
@@ -135,9 +219,11 @@ const SignUpScreen = ({navigation,route}) => {
 
         keyboardType='email-address'
 
+        errorMessage={<Text style = {styles.errorMessage}>{emailValid}</Text>}
+
         value = {email}
 
-        onChangeText = {text => setEmail(text)}
+        onChangeText = {(text) => {emailValidation(text) ,setEmail(text)}}
 
         rightIcon = {<Image style = {{width:25,height:25}} source = {require('../../../assets/logemail.png')}/>}
       
@@ -153,7 +239,9 @@ const SignUpScreen = ({navigation,route}) => {
 
         secureTextEntry = {isSecurePassword}
 
-        onChangeText = {text => setPass(text)}
+        errorMessage = {<Text style = {styles.errorMessage}>{passValid}</Text>}
+
+        onChangeText = {text => {passwordValidation(text), setPass(text)}}
 
         rightIcon = {
 
@@ -181,13 +269,15 @@ const SignUpScreen = ({navigation,route}) => {
 
         inputContainerStyle = {styles.inputStyle}
 
-        placeholder = 'Password Again'
+        placeholder = 'Repeat Password'
 
         value = {rePass}
 
         secureTextEntry = {isSecureRePassword}
 
-        onChangeText = {text => setRePass(text)}
+        errorMessage = {<Text style = {styles.errorMessage}>{rePassValid}</Text>}
+
+        onChangeText = {text => {rePassValidation(text), setRePass(text)}}
 
         rightIcon = {
 
@@ -239,11 +329,13 @@ const styles = StyleSheet.create({
 
     titleTxt : {fontSize:20,fontWeight:'bold',color:'#bf80ff',textShadowColor:'#ff00dd',textShadowRadius:3},
 
-    inputStyle : {borderWidth:1,borderColor:'#ff00dd',borderRadius:10,marginLeft:20,marginRight:20,paddingLeft:15,paddingRight:15,backgroundColor:colors.white,shadowColor:'#ff00dd',elevation:10,shadowRadius:30},
+    inputStyle : {borderWidth:1,borderColor:'#ff00dd',borderRadius:10,marginLeft:20,marginRight:20,paddingLeft:15,paddingRight:15,marginTop:10,backgroundColor:colors.white,shadowColor:'#ff00dd',elevation:10,shadowRadius:30},
 
     gradientContainer : {flex:1,borderTopLeftRadius:30,borderTopRightRadius:30,justifyContent:'center'},
 
-    signupBtnContainer : {borderWidth:1,padding:10,backgroundColor:'#600487',borderRadius:10,marginLeft:30,marginRight:30,justifyContent:'center',alignItems:'center'},
+    signupBtnContainer : {borderWidth:1,padding:10,backgroundColor:'#600487',borderRadius:10,marginLeft:30,marginRight:30,marginTop:10,justifyContent:'center',alignItems:'center'},
 
-    signupTxt : {fontWeight:'bold',fontSize:18,color:colors.white}
+    signupTxt : {fontWeight:'bold',fontSize:18,color:colors.white},
+
+    errorMessage : {marginLeft:50}
 })
