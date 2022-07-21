@@ -13,6 +13,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 
 
+
 const screenWidth = Dimensions.get('screen').width
 const screenHeight = Dimensions.get('screen').height
 
@@ -27,6 +28,7 @@ const BookingScreen = ({navigation,route}) => {
     let {hotel} = route.params
 
     const dispatch = useDispatch()                  //! redux
+
 
 
     const [roomCount, setRoomCount]   = useState(1)         
@@ -224,10 +226,10 @@ const BookingScreen = ({navigation,route}) => {
 
         let bookingArr = []
 
-        if(bookingData == null){
+        if(bookingData === null){
 
 
-            bookingArr.unshift(hotel)
+            bookingArr.push(hotel)
 
             AsyncStorage.setItem('bookingList', JSON.stringify(bookingArr))
             dispatch(bookingListAction.addToBookingList(bookingArr))
@@ -251,8 +253,7 @@ const BookingScreen = ({navigation,route}) => {
                 hotel.filNum += bookingData[i].filNum
 
 
-                console.log('Adding Filter Number....', hotel.filNum)
-
+               
             }
 
             AsyncStorage.setItem('bookingList', JSON.stringify(bookingData))
@@ -346,20 +347,17 @@ const BookingScreen = ({navigation,route}) => {
      
         if(firstName != '' && lastName != '' && checkinDateShow != '' && checkoutDateShow != '' && emailValidError == '') {
 
-            navigation.navigate('BookingListScreen')
+            
 
             addToBookingList(hotel)
-
+           
             showSuccessToast()
 
+            navigation.navigate('BookingListScreen')
 
         }else{
 
-            
-
             showUnSuccessToast()
-
-         
 
         }
 
@@ -798,11 +796,13 @@ return(
         </LinearGradient>
 
         </View>
+
+       
         </ScrollView>
-                
-            
+
     </SafeAreaView>
-    
+
+   
 
 )
 }

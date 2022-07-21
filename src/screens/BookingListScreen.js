@@ -23,12 +23,12 @@ const BookingListScreen = ({navigation,route}) => {
 
     useEffect(() => {
 
-        const getBookingListData = async() => {
+        const getBookingListData = async () => {
 
         const bookingDataFromAsync = await AsyncStorage.getItem('bookingList')
         const bookingData = JSON.parse(bookingDataFromAsync)
 
-        if(bookingData == null){
+        if(bookingData === null){
 
             AsyncStorage.setItem('bookingList', JSON.stringify([]))
             dispatch(bookingListAction.addToBookingList([]))
@@ -43,12 +43,12 @@ const BookingListScreen = ({navigation,route}) => {
 
         }
 
-        const getBookingQty = async() => {
+        const getBookingQty = async () => {
 
         const bookingQtyFromAsync = await AsyncStorage.getItem('bookingQty')
         const bookingQty = JSON.parse(bookingQtyFromAsync)
 
-        if(bookingQty == null){
+        if(bookingQty === null){
 
             AsyncStorage.setItem('bookingQty',JSON.stringify(0))
             dispatch(bookingQtyAction.addToBookingQty(0))
@@ -119,7 +119,7 @@ const BookingListScreen = ({navigation,route}) => {
                 
             return(
 
-                <View style = {styles.cardContainer}>
+                <View style = {styles.cardContainer} key = {index}>
 
                 <View style = {{height:screenWidth/2-5}}>
 
@@ -253,9 +253,13 @@ const BookingListScreen = ({navigation,route}) => {
                     dispatch(bookingQtyAction.addToBookingQty(0))
                     
                      
-                   }} style = {styles.footer}>
+                   }}>
 
-                        <Text style = {{fontSize:16,fontWeight:'bold',color:'#fff'}}>Remove All</Text>
+                    <LinearGradient colors={['#18c1c9','#3df5ff', '#c9fbff',]} start = {{x : 1,y : 0}} end = {{x:1,y:1}} style = {styles.footer}> 
+
+                        <Text style = {{fontSize:16,fontWeight:'bold',color:colors.txt}}>Remove All</Text>
+
+                    </LinearGradient>
 
                     </TouchableOpacity>
                 }

@@ -78,7 +78,7 @@ const DetailScreen = ({navigation,route}) => {
     
     const wishListQtyFromRedux = useSelector(state => state.WishListQty)   //! redux
    
-    let {hotel,parentScreen} = route.params
+    let {hotel,parentScreen} =  route.params
 
     
 
@@ -383,7 +383,7 @@ const FacilitiesIcons = () => {
 
                 <LinearGradient colors={['#7ae7ff','#a3e3ff', '#e6fffd',]} start = {{x : 0,y : 0}} end = {{x:0,y:1}} style = {styles.BtnView}>
 
-                <TouchableOpacity onPress = {() => navigation.navigate('BookingScreen', {hotel : hotel})}>
+                <TouchableOpacity onPress = {() => navigation.navigate('BookingScreen', {hotel : hotel, backToDetail : 'DetailScreen'})}>
                     
                     <Text style = {styles.BtnText}>Book Now</Text>
 

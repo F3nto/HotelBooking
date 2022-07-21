@@ -19,7 +19,7 @@ const MapViewScreen = ({navigation,route}) => {
 
         <SafeAreaView style = {styles.container}>
             
-            <HeaderComponent navigation={navigation} title = 'MapView' icon = 'back'/>
+            <HeaderComponent navigation={navigation} title = 'MapView' icon = 'back' parentScreenName={'DetailScreen'}/>
 
             <View style = {styles.content}>
 

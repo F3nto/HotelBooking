@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from 'react'
-import {SafeAreaView,View,TouchableOpacity,Text,Image,Modal,StyleSheet,Dimensions,TextInput} from 'react-native'
+import {SafeAreaView,View,TouchableOpacity,Text,Image,Modal,StyleSheet,Dimensions,TextInput,ToastAndroid} from 'react-native'
 import colors from '../constants/colors'
 import {LinearGradient} from 'expo-linear-gradient'
 import bookingListAction from '../store/actions/bookingList'
+import authAction from '../store/actions/auth'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import {useDispatch,useSelector} from 'react-redux'
 import reviewListAction from '../store/actions/reviewList'
@@ -29,11 +30,34 @@ const ReviewModalComponent = ({navigation,route}) => {
 
     const userName = useSelector(state => state.Auth)
 
+    const userNameShow = (userName) => {
+
+        AsyncStorage.setItem('userInfo', JSON.stringify(userName))
+        dispatch(authAction.addToAuth(userName))
+        
+
+    }
+
+    const reviewSuccessToast = () => {
+
+        ToastAndroid.showWithGravityAndOffset(
+ 
+            "Thank you for your review!!!",
+            ToastAndroid.LONG,
+            ToastAndroid.BOTTOM,
+            25,
+            50,
+     
+           
+         )
+
+
+
+
+    }
+
 
     const saveToReviewList = (reviewHotel) => {
-
-
-        reviewHotel.userName = userName
 
         reviewHotel.commentTxt = commentTxt
 
@@ -72,6 +96,7 @@ const ReviewModalComponent = ({navigation,route}) => {
 
     }) 
 
+ 
     .catch((error) => {
 
 
@@ -79,6 +104,9 @@ const ReviewModalComponent = ({navigation,route}) => {
 
 
     })
+
+    setCommentTxt('')
+
     
     }
 
@@ -153,7 +181,7 @@ const ReviewModalComponent = ({navigation,route}) => {
 
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => {navigation.navigate('BookingListScreen'), saveToReviewList(reviewHotel)}}>
+            <TouchableOpacity onPress={() => {navigation.navigate('BookingListScreen'), saveToReviewList(reviewHotel), userNameShow(userName), reviewSuccessToast()}}>
 
                 <LinearGradient colors={['#18c1c9','#3df5ff', '#c9fbff',]} start = {{x : 0,y : 0}} end = {{x:1,y:1}} style = {styles.bottomInnerContainer}>
 

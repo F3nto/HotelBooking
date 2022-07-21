@@ -3,6 +3,10 @@ import {LinearGradient} from 'expo-linear-gradient'
 import React from 'react'
 import colors from '../constants/colors'
 import {auth} from '../screens/Auth/firebase/firebase'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import countSignAction from '../store/actions/countSign'
+import { useDispatch } from 'react-redux'
+
 
 
 const screenWidth = Dimensions.get('screen').width
@@ -11,14 +15,25 @@ const screenWidth = Dimensions.get('screen').width
 const SignOutModalComponent = ({navigation, route, visible, outHandler}) => {
 
 
+    const dispatch = useDispatch()
+
+
     const signOutHandler = () => {
+
+       
 
         auth
         .signOut()
         .then(() => {
+
+            AsyncStorage.removeItem('countSign')
+            dispatch(countSignAction.addToCountSign(0))
     
-    
+            
+           
             navigation.replace("LoginScreen")
+
+
     
         })
         

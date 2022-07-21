@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {SafeAreaView,View,Text,TouchableOpacity,StyleSheet,FlatList,Image,Dimensions,TextInput,ScrollView,BackHandler} from 'react-native'
+import {SafeAreaView,View,Text,TouchableOpacity,StyleSheet,FlatList,Image,Dimensions,TextInput,ScrollView,StatusBar,BackHandler} from 'react-native'
 import {SearchBar} from 'react-native-elements'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import HeaderComponent from "../components/HeaderComponent";
@@ -353,6 +353,8 @@ const HomeScreen = ({navigation,route}) => {
     
     return(
         <SafeAreaView style = {styles.container}>
+
+            <StatusBar translucent backgroundColor = 'rgba(0,0,0,0)'/>
 
             <HeaderComponent navigation={navigation} title = 'Home' icon = 'menu'/>
 

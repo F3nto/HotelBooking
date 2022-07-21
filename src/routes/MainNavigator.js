@@ -3,6 +3,7 @@ import {NavigationContainer} from '@react-navigation/native'
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
 import {createDrawerNavigator,DrawerContentScrollView} from '@react-navigation/drawer'
 import DrawerNavigator from "./DrawerNavigator";
+import { auth } from "../screens/Auth/firebase/firebase";
 
 import LoginScreen from "../screens/Auth/LoginScreen";
 import SignUpScreen from "../screens/Auth/SignUpScreen";
@@ -19,7 +20,6 @@ import HelpScreen from "../screens/HelpScreen";
 import CoronavirusScreen from "../screens/CoronavirusScreen";
 import CancellationScreen from "../screens/CancellationScreen";
 import BookingDetailScreen from "../screens/BookingDetailScreen";
-import PaymentScreen from "../screens/PaymentScreen";
 import PricingScreen from "../screens/PricingScreen";
 import PropertiesPoliciesScreen from "../screens/PropertyPoliciesScreen";
 import ExtraFacilitiesScreen from "../screens/ExtraFacilitiesScreen";
@@ -27,7 +27,8 @@ import MapView from '../map/MapView'
 import ReviewListScreen from "../screens/ReviewListScreen";
 import ReviewModalComponent from "../components/ReviewModalComponent";
 import AsyncStorage from '@react-native-async-storage/async-storage'
-
+import { useDispatch } from "react-redux";
+import countSignAction from "../store/actions/countSign";
 
 
 const stack = createNativeStackNavigator()
@@ -71,14 +72,14 @@ const DrawerNavigation = () => {
                 <drawer.Screen name = 'CoronavirusScreen'           component={CoronavirusScreen}/>
                 <drawer.Screen name = 'CancellationScreen'          component={CancellationScreen}/>
                 <drawer.Screen name = 'BookingDetailScreen'         component={BookingDetailScreen}/>
-                <drawer.Screen name = 'PaymentScreen'               component={PaymentScreen}/>
                 <drawer.Screen name = 'PricingScreen'               component={PricingScreen}/>
                 <drawer.Screen name = 'PropertiesPoliciesScreen'    component={PropertiesPoliciesScreen}/>
                 <drawer.Screen name = 'ExtraFacilitiesScreen'       component={ExtraFacilitiesScreen}/>
                 <drawer.Screen name = 'MapViewScreen'               component={MapView}/>
                 <drawer.Screen name = 'ReviewListScreen'            component={ReviewListScreen}/>
                 <drawer.Screen name = 'ReviewModalComponent'        component={ReviewModalComponent}/>
-                
+
+             
 
                 
             </drawer.Navigator>
@@ -90,36 +91,55 @@ const DrawerNavigation = () => {
 
 const MainNavigator = () => {
 
-    const [isUser, setIsUser] = useState(false)
+    let [countSign, setCountSign] = useState(false)
 
- 
-        AsyncStorage.getItem('userInfo').then((res) => {
+    const dispatch = useDispatch()
 
-        const credentialUser = JSON.parse(res)
+    useEffect(() => {
 
-        if(credentialUser != null){
+        const getCountSignData = async() => {
 
-            setIsUser(true)
+        const countSignDataFromAsync = await AsyncStorage.getItem('countSign')
 
+        const countSignData = JSON.parse(countSignDataFromAsync)
+
+        if(countSignData > 0){
+
+            setCountSign(true)
+
+            AsyncStorage.setItem('countSign', JSON.stringify(countSignData))
+            dispatch(countSignAction.addToCountSign(countSignData))
+            
+
+        }else{
+
+            setCountSign(false)
+
+            AsyncStorage.setItem('countSign', JSON.stringify(countSignData))
+            dispatch(countSignAction.addToCountSign(countSignData))
 
         }
 
-    })
+        
+        }
 
-  
+        getCountSignData()
+
+    },[])
+
 
 
     return(
 
     <NavigationContainer>
 
-        <stack.Navigator screenOptions={{headerShown : false}} >
+        <stack.Navigator screenOptions={{headerShown : false}}>
 
-        {!isUser &&  <stack.Screen name = 'LoginScreen'   component={LoginScreen}/> }  
+       {!countSign && <stack.Screen name = 'LoginScreen'   component={LoginScreen}/>}
 
-        {!isUser &&  <stack.Screen name = 'SignUpScreen'  component={SignUpScreen}/> }  
+       {!countSign && <stack.Screen name = 'SignUpScreen'  component={SignUpScreen}/>}
 
-            <stack.Screen name = 'Drawer'  component={DrawerNavigation}/>
+        <stack.Screen name = 'Drawer'  component={DrawerNavigation}/>
 
         </stack.Navigator>
 

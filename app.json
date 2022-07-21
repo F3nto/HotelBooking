@@ -6,7 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
-      "image": "./assets/hotelsplash2.jpg",
+      "image": "./assets/hotsp.png",
       "resizeMode" : "cover"
      
       
@@ -22,7 +22,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/hotelapplogo.jpg",
+        "foregroundImage": "./assets/hotbooklogo.png",
         "backgroundColor": "#FFFFFF"
       }
     },

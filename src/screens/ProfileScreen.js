@@ -5,13 +5,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import colors from '../constants/colors'
 import {LinearGradient} from 'expo-linear-gradient'
 import BottomTabComponent from '../components/BottomTabComponent'
-import {auth} from './Auth/firebase/firebase'
-import firebase from 'firebase'
 import CurrencyModalComponent from '../components/CurrencyModalComponent'
 import NationalityModalComponent from '../components/NationalityModalComponent'
 import LanguageModalComponent from '../components/LanguageModalComponent'
 import SignOutModalComponent from '../components/SignOutModalComponent'
-import { useSelector } from 'react-redux'
+import { useDispatch,useSelector } from 'react-redux'
+import authAction from '../store/actions/auth'
+import emailAction from '../store/actions/email'
+import {auth} from './Auth/firebase/firebase'
 
 const screenWidth = Dimensions.get('screen').width
 
@@ -20,9 +21,64 @@ const screenWidth = Dimensions.get('screen').width
 const ProfileScreen = ({navigation,route}) => {
 
 
-    const userName = useSelector(state => state.Auth)
+    const userName = useSelector(state => state.Auth)           //! user name from redux
+
+    const userEmail = useSelector(state => state.Email)         //! user email from redux
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+
+        const getUserInfo = async() => {
+
+        const getUserNameFromAsync = await AsyncStorage.getItem('userInfo')
+
+        const userInfo = JSON.parse(getUserNameFromAsync)
 
 
+        if(userInfo == null){
+
+            AsyncStorage.setItem('userInfo', JSON.stringify([]))
+            dispatch(authAction.addToAuth([]))
+
+        }else{
+
+            AsyncStorage.setItem('userInfo', JSON.stringify(userInfo))
+            dispatch(authAction.addToAuth(userInfo))
+
+
+        }
+
+        }
+
+        const getUserEmail = async() => {
+
+        const userEmailFromAsync = await AsyncStorage.getItem('email')
+
+        const userEmailData = JSON.parse(userEmailFromAsync)
+        
+        if(userEmailData == null){
+
+            AsyncStorage.setItem('email', JSON.stringify([]))
+            dispatch(emailAction.saveToEmail([]))
+
+
+        }else{
+
+            AsyncStorage.setItem('email', JSON.stringify(userEmailData))
+            dispatch(emailAction.saveToEmail(userEmailData))
+
+        }
+
+        }
+
+
+        getUserEmail()
+        getUserInfo()
+
+    },[])
+
+    
     const [ showCurrencyDialog, setShowCurrencyDialog ] = useState(false)
     const [ curren, setCurren ] = useState('')
 
@@ -48,7 +104,7 @@ const ProfileScreen = ({navigation,route}) => {
                 <Image style = {{width:80,height:80,borderRadius:70}} source= {require('../../assets/tor.jpg')}/>
                 
                 <Text style = {styles.pfName}>{userName}</Text>
-                <Text style = {styles.pfEmail}>fento99999@gmail.com</Text>
+                <Text style = {styles.pfEmail}>{userEmail}</Text>
 
             </LinearGradient>
 

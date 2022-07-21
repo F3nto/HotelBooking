@@ -1,17 +1,46 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import {SafeAreaView,View,Text,TouchableOpacity,StyleSheet,Image,} from 'react-native'
 import colors from '../constants/colors'
 import {LinearGradient} from 'expo-linear-gradient'
-import { useSelector } from 'react-redux'
-
+import { useDispatch,useSelector } from 'react-redux'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import authAction from '../store/actions/auth'
 import LogOutModalComponent from '../components/LogOutModalComponent'
 
 
-const DrawerNavigator = ({navigation}) => {
+
+
+const DrawerNavigator = ({navigation,route}) => {
 
 const [showDialog, setShowDialog] = useState(false)
 
 const userName = useSelector(state => state.Auth)
+
+const dispatch = useDispatch()
+
+useEffect(() => {
+
+    const getUserName = async() => {
+
+    const userNameFromAsync = await AsyncStorage.getItem('userInfo')
+
+    const userInfo = JSON.parse(userNameFromAsync)
+
+    if(userInfo == null){
+
+        AsyncStorage.setItem('userInfo', JSON.stringify([]))
+        dispatch(authAction.addToAuth([]))
+
+    }
+
+        AsyncStorage.setItem('userInfo', JSON.stringify(userInfo))
+        dispatch(authAction.addToAuth(userInfo))
+
+
+    }
+    getUserName()
+
+},[route])
 
 return(
 
@@ -66,14 +95,6 @@ return(
 
             <TouchableOpacity style = {styles.imgAndTxtContainer} onPress = {() => {navigation.navigate('ContactUsScreen')}}>
         
-                <Image style = {{width:30, height:30}} source = {require('../../assets/Icons/contact.png')}/>
-
-                <Text style = {styles.screenTxt}>Contact Us</Text>
-
-            </TouchableOpacity>
-
-            <TouchableOpacity style = {styles.imgAndTxtContainer} onPress = {() => {navigation.navigate('Home')}}>
-        
                 <Image style = {{width:30, height:30}} source = {require('../../assets/Icons/about.png')}/>
 
                 <Text style = {styles.screenTxt}>About Us</Text>
@@ -91,14 +112,9 @@ return(
 
             </TouchableOpacity>
 
-
-
+            <LogOutModalComponent navigation={navigation} visible = {showDialog} outHandler = {() => setShowDialog(false)} />
 
         </View>
-
-        <LogOutModalComponent navigation={navigation} visible = {showDialog} outHandler = {() => setShowDialog(false)} />
-
-
     </SafeAreaView>
 
 
@@ -111,7 +127,7 @@ const styles = StyleSheet.create({
     
     container : {flex:1},
 
-    content   : {flex:1,backgroundColor:'#000'},
+    content   : {flex:1,backgroundColor:'#03151a',paddingBottom:80},
 
     imgAndTxtContainer : {flexDirection:'row',alignItems:'center',margin:20},
 

@@ -4,21 +4,54 @@ import colors from '../../constants/colors'
 import {LinearGradient} from 'expo-linear-gradient'
 import {Input} from 'react-native-elements'
 import { auth } from './firebase/firebase'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import authAction from '../../store/actions/auth'
+import emailAction from '../../store/actions/email'
+import countSignAction from '../../store/actions/countSign'
+import { useDispatch,useSelector } from 'react-redux'
 
 const screenWidth = Dimensions.get('screen').width
-const screenHeight = Dimensions.get('screen').height
+
 
 const LoginScreen = ({navigation, route}) => {
-
-
 
     const [email, setEmail] = useState('')
     const [pass,  setPass] = useState('')
 
     const [isSecurePassword, setIsSecurePassword] = useState(true)
 
+    const dispatch = useDispatch()
  
     const handleSignIn = () => {
+
+        let signNum = 0;
+
+        AsyncStorage.getItem('countSign').then((res) => {
+
+            let countSignData = JSON.parse(res)
+    
+    
+            signNum += 1
+    
+            countSignData = signNum
+    
+            console.log('playing....', countSignData)
+    
+            AsyncStorage.setItem('countSign', JSON.stringify(countSignData))
+            dispatch(countSignAction.addToCountSign(countSignData))
+              
+            
+            })
+            .catch((error) => {
+    
+              console.log(error)
+    
+    
+            })
+
+        
+
+
 
         auth.
         signInWithEmailAndPassword(email,pass) 
@@ -33,13 +66,13 @@ const LoginScreen = ({navigation, route}) => {
 
             navigation.navigate('Drawer')
 
+             
+
         })
 
-        .catch(error => alert(error.massage))
+        .catch(error => alert("Enter your email and password!!!", error.massage))
         
-
-        
-
+        unSuccessSignIn()
     }
 
     const successSignIn = () => {
@@ -87,7 +120,13 @@ const LoginScreen = ({navigation, route}) => {
 
             <LinearGradient colors={['#037a87','#a3e3ff', '#00d9e0',]} start = {{x : 0,y : 0}} end = {{x:0,y:1}} style = {styles.inputOuterContainer}>
 
-          
+            <View style = {styles.titleContainer}>
+
+                <Text style = {styles.titleTxt}>Open your Hot-Book</Text>
+
+                <Text style = {styles.loginTitleTxt}>Login</Text>
+
+            </View>
 
             <Input
 
@@ -97,7 +136,7 @@ const LoginScreen = ({navigation, route}) => {
 
             keyboardType='email-address'
 
-            rightIcon = {<Image style = {{width:25,height:25}} source = {require('../../../assets/logemail.png')}/>}
+            rightIcon = {<Image style = {{width:25,height:25}} source = {require('../../../assets/mail.png')}/>}
             
             value={email}
             
@@ -184,6 +223,12 @@ const styles = StyleSheet.create({
     content : {flex:1,backgroundColor:colors.white},
 
     inputOuterContainer : {flex:1,borderWidth:1,borderColor:'#00ffea',justifyContent:'center', alignItems:'center'},
+
+    titleContainer :{marginRight:140,marginBottom:20},
+
+    titleTxt : {fontSize:16, fontWeight:'bold', color:colors.txt},
+
+    loginTitleTxt : {fontSize:35,fontWeight:'bold', color:colors.txt},
 
     inputStyle : {borderWidth:1,borderColor:'#128a8c',borderRadius:10,marginLeft:20,marginRight:20,paddingLeft:10,paddingRight:10,backgroundColor:colors.white,shadowColor:'#ff00dd',elevation:10,shadowRadius:30},
 

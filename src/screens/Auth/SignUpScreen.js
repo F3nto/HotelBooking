@@ -3,11 +3,19 @@ import React,{useState,useEffect} from 'react'
 import HeaderComponent from '../../components/HeaderComponent'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import authAction from '../../store/actions/auth'
+import wishListAction from '../../store/actions/wishList'
+import bookingListAction from '../../store/actions/bookingList'
+import bookingQtyAction from '../../store/actions/bookingQty'
+import wishListQtyAction from '../../store/actions/wishListQty'
+import countSignAction from '../../store/actions/countSign'
+import reviewListAction from '../../store/actions/reviewList'
+import emailAction from '../../store/actions/email'
 import {Input} from 'react-native-elements'
 import colors from '../../constants/colors'
 import {LinearGradient} from 'expo-linear-gradient'
 import { auth } from './firebase/firebase'
 import {useDispatch,useSelector} from 'react-redux'
+
 
 
 const SignUpScreen = ({navigation,route}) => {
@@ -27,7 +35,7 @@ const SignUpScreen = ({navigation,route}) => {
     const dispatch = useDispatch()
 
 
-     const successRegister = () => {
+    const successRegister = () => {
 
       ToastAndroid.showWithGravityAndOffset(
 
@@ -43,6 +51,9 @@ const SignUpScreen = ({navigation,route}) => {
       )
     
     }
+
+
+    
 
     const unsuccessRegister = () => {
 
@@ -68,50 +79,132 @@ const SignUpScreen = ({navigation,route}) => {
 
     }
 
- 
+    
 
     const handleSignUp = () => {
 
-    if(name != '' && emailValid == '' && passValid == '' && rePassValid == ''){
+      AsyncStorage.removeItem('userInfo')
+      dispatch(authAction.addToAuth([]))
 
+      AsyncStorage.removeItem('email')
+      dispatch(emailAction.saveToEmail([]))
+
+      AsyncStorage.removeItem('wishList')
+      dispatch(wishListAction.addToWishList([]))
+
+      AsyncStorage.removeItem('wishListQty')
+      dispatch(wishListQtyAction.addToWishListQty(0))
+
+      AsyncStorage.removeItem('bookingList')
+      dispatch(bookingListAction.addToBookingList([]))
+
+      AsyncStorage.removeItem('bookingQty')
+      dispatch(bookingQtyAction.addToBookingQty(0))
+
+      AsyncStorage.removeItem('reviewList')
+      dispatch(reviewListAction.addToReviewList([]))
+
+      let signNum = 0;
+
+      AsyncStorage.getItem('countSign').then((res) => {
+
+        let countSignData = JSON.parse(res)
+
+
+        signNum += 1
+
+        countSignData = signNum
+
+        console.log('playing....', countSignData)
+
+        AsyncStorage.setItem('countSign', JSON.stringify(countSignData))
+        dispatch(countSignAction.addToCountSign(countSignData))
+          
+        
+        })
+        .catch((error) => {
+
+          console.log('error....', error)
+
+
+        })
+    
+
+        if(name != '' && emailValid == '' && passValid == '' && rePassValid == ''){
+
+          AsyncStorage.getItem('userInfo').then((res) => {
+
+          const responseData = JSON.parse(res)
+  
+          let userInfoArr = []
+  
+          if(responseData == null){
+  
+            userInfoArr.push(name)
+  
+  
+            AsyncStorage.setItem('userInfo', JSON.stringify(userInfoArr))
+            dispatch(authAction.addToAuth(userInfoArr))
+    
+          }else{
+  
+            responseData.push(name)
+  
+            AsyncStorage.setItem('userInfo', JSON.stringify(responseData))
+            dispatch(authAction.addToAuth(responseData))
+  
+  
+          }
+          })
+          .catch((error) => {console.log(error)})
+
+          AsyncStorage.getItem('email').then((res) => {
+
+          const emailData = JSON.parse(res)
+
+          let emailArr = []
+
+          if(emailData == null){
+
+            emailArr.push(email)
+
+            AsyncStorage.setItem('email', JSON.stringify(emailArr))
+            dispatch(emailAction.saveToEmail(emailArr))
+            
+          }else{
+
+            emailData.push(email)
+
+            
+            AsyncStorage.setItem('email', JSON.stringify(emailData))
+            dispatch(emailAction.saveToEmail(emailData))
+
+
+          }
+
+        })
+        .catch((error) => console.log(error))
+  
+
+   
       auth.createUserWithEmailAndPassword(email,pass)
       .then(credentials => {
 
+        
         const user = credentials.user
         
         console.log('Sign up with.....' , user.email)
 
-        
-
-        AsyncStorage.getItem('userInfo').then((res) => {
-
-        const responseData = JSON.parse(res)
-
-        if(responseData == null){
-
-          let userName = []
-
-          userName.push(name)
-
-          AsyncStorage.setItem('userInfo', JSON.stringify(userName))
-          dispatch(authAction.addToAuth(userName))
-
-        }else{
-
-          responseData.push(name)
-
-          AsyncStorage.setItem('userInfo', JSON.stringify(responseData))
-          dispatch(authAction.addToAuth(responseData))
-
-
-        }
-
-        })
-     
+      
         
         successRegister()
 
         navigation.navigate('Drawer')
+
+        setName('')
+        setEmail('')
+        setPass('')
+        setRePass('')
 
       })
 
@@ -125,7 +218,6 @@ const SignUpScreen = ({navigation,route}) => {
 
     }
 
-      
     }
 
 
@@ -225,7 +317,7 @@ const SignUpScreen = ({navigation,route}) => {
 
         onChangeText = {(text) => {emailValidation(text) ,setEmail(text)}}
 
-        rightIcon = {<Image style = {{width:25,height:25}} source = {require('../../../assets/logemail.png')}/>}
+        rightIcon = {<Image style = {{width:25,height:25}} source = {require('../../../assets/mail.png')}/>}
       
       />
 
