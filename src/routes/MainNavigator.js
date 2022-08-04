@@ -27,7 +27,7 @@ import MapView from '../map/MapView'
 import ReviewListScreen from "../screens/ReviewListScreen";
 import ReviewModalComponent from "../components/ReviewModalComponent";
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import countSignAction from "../store/actions/countSign";
 
 
@@ -91,7 +91,8 @@ const DrawerNavigation = () => {
 
 const MainNavigator = () => {
 
-    let [countSign, setCountSign] = useState(false)
+    
+    const [countSign, setCountSign] = useState(false)
 
     const dispatch = useDispatch()
 
@@ -103,17 +104,17 @@ const MainNavigator = () => {
 
         const countSignData = JSON.parse(countSignDataFromAsync)
 
-        if(countSignData > 0){
+        if(countSignData == 0){
 
-            setCountSign(true)
+            setCountSign(false)
 
-            AsyncStorage.setItem('countSign', JSON.stringify(countSignData))
-            dispatch(countSignAction.addToCountSign(countSignData))
+            AsyncStorage.setItem('countSign', JSON.stringify(0))
+            dispatch(countSignAction.addToCountSign(0))
             
 
         }else{
 
-            setCountSign(false)
+            setCountSign(true)
 
             AsyncStorage.setItem('countSign', JSON.stringify(countSignData))
             dispatch(countSignAction.addToCountSign(countSignData))
@@ -135,13 +136,13 @@ const MainNavigator = () => {
 
         <stack.Navigator screenOptions={{headerShown : false}}>
 
-       {!countSign && <stack.Screen name = 'LoginScreen'   component={LoginScreen}/>}
+       <stack.Screen name = 'LoginScreen'   component={LoginScreen}/>
 
-       {!countSign && <stack.Screen name = 'SignUpScreen'  component={SignUpScreen}/>}
+       <stack.Screen name  = 'SignUpScreen'  component={SignUpScreen}/>
 
-        <stack.Screen name = 'Drawer'  component={DrawerNavigation}/>
+      {countSign && <stack.Screen name = 'Drawer'  component={DrawerNavigation}/>}
 
-        </stack.Navigator>
+       </stack.Navigator>
 
     </NavigationContainer>
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import {SafeAreaView,View,Text,TouchableOpacity,StyleSheet,Image,Modal,Dimensions} from 'react-native'
+import {SafeAreaView,View,Text,TouchableOpacity,StyleSheet,Image,Modal,Dimensions,BackHandler} from 'react-native'
 import colors from '../constants/colors'
 import {LinearGradient} from 'expo-linear-gradient'
 
@@ -18,7 +18,7 @@ return(
         <View style = {styles.yesAndNoContainer}>
 
 
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => {BackHandler.exitApp() ,outHandler()}}>
 
                   
             <LinearGradient colors={['#18c1c9','#3df5ff', '#47b4fc',]} start = {{x : 0,y : 0}} end = {{x:1,y:1}} style = {styles.yesAndNoInnerContainer}>

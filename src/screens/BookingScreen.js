@@ -25,7 +25,7 @@ let genderArr = [
 
 const BookingScreen = ({navigation,route}) => {
 
-    let {hotel} = route.params
+    let {hotel,parentScreen} = route.params
 
     const dispatch = useDispatch()                  //! redux
 
@@ -228,7 +228,6 @@ const BookingScreen = ({navigation,route}) => {
 
         if(bookingData === null){
 
-
             bookingArr.push(hotel)
 
             AsyncStorage.setItem('bookingList', JSON.stringify(bookingArr))
@@ -347,8 +346,6 @@ const BookingScreen = ({navigation,route}) => {
      
         if(firstName != '' && lastName != '' && checkinDateShow != '' && checkoutDateShow != '' && emailValidError == '') {
 
-            
-
             addToBookingList(hotel)
            
             showSuccessToast()
@@ -439,7 +436,7 @@ return(
                 <ImageBackground style = {{width:screenWidth,height:screenHeight,opacity:0.5,}} source = {hotel.backgroundImg}/>
             </View>
 
-            <HeaderComponent navigation = {navigation} title = 'Booking' icon = 'menu'/>
+            <HeaderComponent navigation = {navigation} title = 'Booking' icon = 'menu' parentScreenName={parentScreen}/>
 
             <ScrollView>
             <View style = {styles.content}>

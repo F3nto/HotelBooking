@@ -7,6 +7,7 @@ import authAction from '../store/actions/auth'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import {useDispatch,useSelector} from 'react-redux'
 import reviewListAction from '../store/actions/reviewList'
+import { Rating } from 'react-native-elements'
 
 
 const screenWidth = Dimensions.get('screen').width
@@ -19,10 +20,10 @@ const ReviewModalComponent = ({navigation,route}) => {
     
     const [commentTxt, setCommentTxt] = useState('')
 
-    const [defaultRating , setDefaultRating] = useState(2)
-    const [maxRating, setMaxRating] = useState([1,2,3,4,5])
+    const [rating , setRating] = useState('')
 
-    
+    const [showDate, setShowDate] = useState('')
+
 
     const unFilledStar = require('../../assets/unfillstar.png')
 
@@ -56,19 +57,25 @@ const ReviewModalComponent = ({navigation,route}) => {
 
     }
 
+  
+
 
     const saveToReviewList = (reviewHotel) => {
 
-        reviewHotel.commentTxt = commentTxt
+    let currentDate = new Date()
 
-        reviewHotel.defaultRating = defaultRating
+    let dateFormat = currentDate.getDate() + '/' + (currentDate.getMonth() + 1) + '/' + currentDate.getFullYear();
+    
+    setShowDate(dateFormat)
+    
 
-        reviewHotel.maxRating = maxRating
+    reviewHotel.commentTxt = commentTxt
 
-        reviewHotel.filledStar = filledStar
+    reviewHotel.rating = rating
 
-        reviewHotel.unFilledStar = unFilledStar
+    reviewHotel.showDate = showDate
 
+    console.log('review hotel rating', reviewHotel.rating)
 
     AsyncStorage.getItem('reviewList').then((res) => {
 
@@ -122,34 +129,24 @@ const ReviewModalComponent = ({navigation,route}) => {
 
         <View style = {styles.content}>
 
-        <View style = {styles.starImgContainer}>
+                    
+        <Rating
 
-            
+        showRating 
 
-            {maxRating.map((item,index) => {
+        fractions = {1}
+        startingValue = {1}
+        ratingImage={unFilledStar}
+        ratingCount={5}
+        imageSize={30}
 
-        
+        onFinishRating = {(value) => setRating(value)}
 
-                return(
+        style={{ paddingVertical: 10 }}
 
-                    <TouchableOpacity onPress={() => {setDefaultRating(item)}} key = {index}>
+        />
 
-                     
-                            
-                        <Image  style = {{width:25,height:25}} source = {item <= defaultRating ? filledStar : unFilledStar}/>
-
-                       
-
-                    </TouchableOpacity>
-                )
-
-            })
-
-            }
-
-            
-
-        </View>
+      
 
         <View style = {styles.txtInputContainer}>
 
@@ -221,7 +218,7 @@ const styles = StyleSheet.create({
 
     rateTxt : {fontSize:18, fontWeight:'bold', color:colors.txt},
 
-    starImgContainer : {flexDirection:'row',alignItems:'center',justifyContent:'space-evenly',marginTop:15},
+
 
     txtInputContainer : {height:screenWidth/2,padding:10,
                         borderWidth:1, borderRadius:10,

@@ -115,7 +115,7 @@ const SignUpScreen = ({navigation,route}) => {
 
         countSignData = signNum
 
-        console.log('playing....', countSignData)
+        console.log('Counting start....', countSignData)
 
         AsyncStorage.setItem('countSign', JSON.stringify(countSignData))
         dispatch(countSignAction.addToCountSign(countSignData))

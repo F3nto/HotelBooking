@@ -5,8 +5,6 @@ import {LinearGradient} from 'expo-linear-gradient'
 import {Input} from 'react-native-elements'
 import { auth } from './firebase/firebase'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import authAction from '../../store/actions/auth'
-import emailAction from '../../store/actions/email'
 import countSignAction from '../../store/actions/countSign'
 import { useDispatch,useSelector } from 'react-redux'
 
@@ -35,7 +33,7 @@ const LoginScreen = ({navigation, route}) => {
     
             countSignData = signNum
     
-            console.log('playing....', countSignData)
+            console.log('Counting....', countSignData)
     
             AsyncStorage.setItem('countSign', JSON.stringify(countSignData))
             dispatch(countSignAction.addToCountSign(countSignData))

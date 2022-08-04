@@ -144,13 +144,9 @@ const DetailScreen = ({navigation,route}) => {
             if(wishListData != null){
 
                 leftData = wishListData.filter(prod => prod._id != wishListItem._id)
-                
-
-               
+            
             }
             
-          
-
             AsyncStorage.setItem('wishList', JSON.stringify(leftData))
             dispatch(wishListAction.addToWishList(leftData))
 
@@ -292,10 +288,6 @@ const FacilitiesIcons = () => {
 
 
                     </View>
-
-
-
-
                 )
             })
 
@@ -349,7 +341,6 @@ const FacilitiesIcons = () => {
 
                 <Text style = {styles.countryText}>{hotel.country}</Text>
 
-                <Text style = {styles.landmark}>See all NearBy Landmarks</Text>
 
             </View>
 
@@ -383,7 +374,7 @@ const FacilitiesIcons = () => {
 
                 <LinearGradient colors={['#7ae7ff','#a3e3ff', '#e6fffd',]} start = {{x : 0,y : 0}} end = {{x:0,y:1}} style = {styles.BtnView}>
 
-                <TouchableOpacity onPress = {() => navigation.navigate('BookingScreen', {hotel : hotel, backToDetail : 'DetailScreen'})}>
+                <TouchableOpacity onPress = {() => navigation.navigate('BookingScreen', {hotel : hotel, parentScreen : 'DetailScreen'})}>
                     
                     <Text style = {styles.BtnText}>Book Now</Text>
 

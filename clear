@@ -1,0 +1,77 @@
+[33mcommit 63af13b683f76d0c6ff9e66a5702ca3a287701ab[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: F3nto <pyaesonetun1141999@gmail.com>
+Date:   Thu Jul 21 07:30:35 2022 +0630
+
+    final fixing signin and signout and email
+
+[33mcommit efeacdb378b624f2ee23eae531c2636d9a79900c[m
+Author: F3nto <pyaesonetun1141999@gmail.com>
+Date:   Fri Jul 1 15:01:23 2022 +0630
+
+    User name and sign in and sign out
+
+[33mcommit 6dd7360707fc026f0c2a43a3b2437aa9788eb86d[m
+Author: F3nto <pyaesonetun1141999@gmail.com>
+Date:   Mon Jun 27 14:47:37 2022 +0630
+
+    Create User Autentication with firebase
+
+[33mcommit 5d498305dfd8d71f0671fd025a77789f18547350[m
+Author: F3nto <pyaesonetun1141999@gmail.com>
+Date:   Thu Jun 23 09:20:50 2022 +0630
+
+    Fixed Review List && init Sign in and sign up
+
+[33mcommit ad6e964b8933e6ae6cc39e712e28babe28dc4d64[m
+Author: F3nto <pyaesonetun1141999@gmail.com>
+Date:   Fri Jun 10 20:48:31 2022 +0630
+
+    fixed searchbar autocomplete and review modal
+
+[33mcommit 3c42ec03854de10f3a02572ac8f5ba0a81a169ab[m
+Author: F3nto <pyaesonetun1141999@gmail.com>
+Date:   Sat Jun 4 07:23:04 2022 +0630
+
+    Fixed checkin and checkout
+
+[33mcommit 2ca9a55633b15c817561a33c60742df1ba7fddcc[m
+Author: F3nto <pyaesonetun1141999@gmail.com>
+Date:   Wed Jun 1 07:25:43 2022 +0630
+
+    Fixed Search bar auto complete
+
+[33mcommit d2a143ed43ecb0bd706a1b681e8e73b9e0a32810[m
+Author: F3nto <pyaesonetun1141999@gmail.com>
+Date:   Sun May 29 07:30:07 2022 +0630
+
+    fix map screen && create search bar auto complete home screen
+
+[33mcommit 5dde2e5a96686064262bfd934d3f4f1f5ce6075e[m
+Author: F3nto <pyaesonetun1141999@gmail.com>
+Date:   Fri May 13 09:01:38 2022 +0630
+
+    can remove both same and different hotels in booking List , init map View, bookingList Qty
+
+[33mcommit dcea453e2409203ccc2505ed67c51b1ecb4d3e03[m
+Author: F3nto <pyaesonetun1141999@gmail.com>
+Date:   Fri May 6 20:50:25 2022 +0630
+
+    checking validation email and modified booking
+
+[33mcommit 6bd0673cad083f57bacd16fdaaf1b1aee46eb538[m
+Author: F3nto <pyaesonetun1141999@gmail.com>
+Date:   Fri Apr 8 21:16:23 2022 +0630
+
+    add Profile Screen
+
+[33mcommit 3bf54235e66cbefa8b465bbfb234bf5e64e9e683[m
+Author: F3nto <pyaesonetun1141999@gmail.com>
+Date:   Mon Apr 4 07:58:25 2022 +0630
+
+    add Profile Screen
+
+[33mcommit be27e1264cb5c94dbde3b6d89b145f54a41fe819[m
+Author: F3nto <pyaesonetun1141999@gmail.com>
+Date:   Sun Apr 3 08:03:23 2022 +0630
+
+    First Hotel booking Proj

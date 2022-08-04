@@ -20,8 +20,6 @@ const SignOutModalComponent = ({navigation, route, visible, outHandler}) => {
 
     const signOutHandler = () => {
 
-       
-
         auth
         .signOut()
         .then(() => {

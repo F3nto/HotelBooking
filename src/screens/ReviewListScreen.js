@@ -44,14 +44,15 @@ const ReviewListScreen = ({navigation, route}) => {
         }
     }
 
+
     
     const getReviewData = async() => {
 
         const reviewDataFromAsync = await AsyncStorage.getItem('reviewList')
 
-        const getReviewData = JSON.parse(reviewDataFromAsync)
+        const reviewData = JSON.parse(reviewDataFromAsync)
 
-        if(getReviewData == null){
+        if(reviewData == null){
 
             AsyncStorage.setItem('reviewList', JSON.stringify([]))
             dispatch(reviewListAction.addToReviewList([]))
@@ -59,8 +60,8 @@ const ReviewListScreen = ({navigation, route}) => {
 
         }else{
 
-            AsyncStorage.setItem('reviewList', JSON.stringify(getReviewData))
-            dispatch(reviewListAction.addToReviewList(getReviewData))
+            AsyncStorage.setItem('reviewList', JSON.stringify(reviewData))
+            dispatch(reviewListAction.addToReviewList(reviewData))
 
         }
         
@@ -69,7 +70,7 @@ const ReviewListScreen = ({navigation, route}) => {
     getUserInfo()
     getReviewData()
    
-
+    
     },[route])
 
 
@@ -83,6 +84,8 @@ const ReviewListScreen = ({navigation, route}) => {
         <View style = {styles.content}>
 
             {reviewHotel ?. length > 0 ?
+
+         
 
             <FlatList
             
@@ -98,7 +101,7 @@ const ReviewListScreen = ({navigation, route}) => {
           
                 <Image style = {{width:'110%',height:'130%',position:'absolute',resizeMode:'cover',opacity:0.5,borderRadius:10}} source = {item.img}/>
         
-           
+                <Text style = {styles.dateTxt}>{item.showDate}</Text>
                 
                 <View style = {styles.profileNameContainer}>
 
@@ -108,46 +111,23 @@ const ReviewListScreen = ({navigation, route}) => {
 
                     </View>
 
-                    <View style = {{marginTop:15}}>
+                   
 
                     <Text style = {styles.titleTxt}>{userName}</Text>
 
-                       
-                        <View style = {styles.starImgContainer}>
+                    <View style = {styles.ratingView}>
 
-                         
-                            
-                            {item.maxRating.map((i,starIndex) => {
-                
-                                return(
+                        <Text style = {styles.ratingTxt}>Rating : <Image style = {{width:25,height:25}} source = {require('../../assets/filledstar.png')}/>{item.rating}</Text>
 
-                                    <View key = {starIndex}>
-                
-                                        <TouchableOpacity onPress={() => item.defaultRating}>
-                    
-                                            <Image style = {{width:25,height:25}} source = {i <= item.defaultRating ? item.filledStar : item.unFilledStar}/>
-                    
-                                        </TouchableOpacity>
+                    </View>
 
-                                    </View>
-                                )
-                
-                            })
-                
-                            }
-
-                           
-                
-                        </View>
-
-                        </View>
-
+                  
+                   
                 </View>
 
-              
+               
 
-         
-
+             
 
                 <Text style = {styles.commentTxtStyle}>{item.commentTxt}</Text>
 
@@ -224,17 +204,23 @@ const styles = StyleSheet.create({
 
     starImgContainer : {flexDirection:'row',alignItems:'center',marginLeft:10,justifyContent:'space-evenly'},
 
-    userNameTxt : {fontSize:16,fontWeight:'bold',color:colors.txt},
+    userNameTxt : {fontSize:18,fontWeight:'bold',color:colors.txt},
 
     commentTxtStyle : {fontSize:16, color:colors.txt,fontWeight:'bold',marginLeft:90},
 
-    titleTxt : {fontSize:20, fontWeight:'bold', color:colors.primary, marginLeft:15},
+    titleTxt : {fontSize:25, fontWeight:'bold', color:colors.primary, marginLeft:15},
 
     profileNameContainer : {flexDirection:'row', alignItems:'center'},
 
-    footer : {justifyContent:'center', alignItems:'center',width:screenWidth,padding:10,backgroundColor:colors.orange,borderRadius:10}
+    footer : {justifyContent:'center', alignItems:'center',width:screenWidth,padding:10,backgroundColor:colors.orange,borderRadius:10},
 
-    
+    ratingTxt : {fontSize:19,fontWeight:'bold',},
+
+    nameAndRatingContainer : {flexDirection:'row', alignItems:'center'},
+
+    ratingView : {flexDirection:'row', alignItems:'center', marginLeft:25},
+
+    dateTxt : {fontSize:18, fontWeight: 'bold',}
 
    
 
