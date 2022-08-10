@@ -50,10 +50,7 @@ const ReviewModalComponent = ({navigation,route}) => {
             50,
      
            
-         )
-
-
-
+        )
 
     }
 
@@ -129,11 +126,11 @@ const ReviewModalComponent = ({navigation,route}) => {
 
         <View style = {styles.content}>
 
-                    
+
         <Rating
 
         showRating 
-
+                    
         fractions = {1}
         startingValue = {1}
         ratingImage={unFilledStar}

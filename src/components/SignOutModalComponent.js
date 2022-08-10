@@ -1,41 +1,41 @@
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Modal, Dimensions  } from 'react-native'
 import {LinearGradient} from 'expo-linear-gradient'
-import React from 'react'
+import React,{useEffect} from 'react'
 import colors from '../constants/colors'
 import {auth} from '../screens/Auth/firebase/firebase'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import countSignAction from '../store/actions/countSign'
 import { useDispatch } from 'react-redux'
+import createUserAction from '../store/actions/createUser'
 
 
 
 const screenWidth = Dimensions.get('screen').width
 
 
-const SignOutModalComponent = ({navigation, route, visible, outHandler}) => {
+const SignOutModalComponent = ({navigation, visible, outHandler, route}) => {
 
 
     const dispatch = useDispatch()
 
 
-    const signOutHandler = () => {
+    const signOutHandler = async() => {
 
-        auth
-        .signOut()
-        .then(() => {
+        const getUserDataFromAsync = await AsyncStorage.getItem('createUser')
 
-            AsyncStorage.removeItem('countSign')
-            dispatch(countSignAction.addToCountSign(0))
+        const createUserData = JSON.parse(getUserDataFromAsync)
+
+        if(createUserData != null){
+
+            AsyncStorage.removeItem('createUser')   
+            dispatch(createUserAction.addToCreateUser(null))
+
+
+        }
     
-            
-           
-            navigation.replace("LoginScreen")
 
-
+        navigation.replace("LoginScreen")
     
-        })
-        
-        .catch(error => alert(error.massage))
+   
     
     }
 
@@ -84,10 +84,10 @@ const SignOutModalComponent = ({navigation, route, visible, outHandler}) => {
 
     </Modal>
 
+)
 
-   
-  )
 }
+
 
 export default SignOutModalComponent
 

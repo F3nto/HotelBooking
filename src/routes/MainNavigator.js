@@ -28,7 +28,8 @@ import ReviewListScreen from "../screens/ReviewListScreen";
 import ReviewModalComponent from "../components/ReviewModalComponent";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useDispatch, useSelector } from "react-redux";
-import countSignAction from "../store/actions/countSign";
+import createUserAction from '../store/actions/createUser'
+
 
 
 const stack = createNativeStackNavigator()
@@ -91,43 +92,27 @@ const DrawerNavigation = () => {
 
 const MainNavigator = () => {
 
-    
-    const [countSign, setCountSign] = useState(false)
-
-    const dispatch = useDispatch()
+    const [user, setUser] = useState(false)
 
     useEffect(() => {
 
-        const getCountSignData = async() => {
+        const getUserData = async () => {
 
-        const countSignDataFromAsync = await AsyncStorage.getItem('countSign')
+        const getUserDataFromAsync = await AsyncStorage.getItem('createUser')
 
-        const countSignData = JSON.parse(countSignDataFromAsync)
+        const userData = JSON.parse(getUserDataFromAsync)
 
-        if(countSignData == 0){
+            if(userData != null){
 
-            setCountSign(false)
+                setUser(true)
 
-            AsyncStorage.setItem('countSign', JSON.stringify(0))
-            dispatch(countSignAction.addToCountSign(0))
-            
-
-        }else{
-
-            setCountSign(true)
-
-            AsyncStorage.setItem('countSign', JSON.stringify(countSignData))
-            dispatch(countSignAction.addToCountSign(countSignData))
+            }
 
         }
 
-        
-        }
-
-        getCountSignData()
+        getUserData()
 
     },[])
-
 
 
     return(
@@ -136,13 +121,12 @@ const MainNavigator = () => {
 
         <stack.Navigator screenOptions={{headerShown : false}}>
 
-       <stack.Screen name = 'LoginScreen'   component={LoginScreen}/>
+            {!user && <stack.Screen name = 'LoginScreen'  component={LoginScreen}/>}
+            {!user && <stack.Screen name  = 'SignUpScreen'  component={SignUpScreen}/>}
 
-       <stack.Screen name  = 'SignUpScreen'  component={SignUpScreen}/>
+            <stack.Screen name = 'Drawer'  component={DrawerNavigation}/>
 
-      {countSign && <stack.Screen name = 'Drawer'  component={DrawerNavigation}/>}
-
-       </stack.Navigator>
+        </stack.Navigator>
 
     </NavigationContainer>
 

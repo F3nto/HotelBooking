@@ -7,7 +7,6 @@ import wishListAction from '../../store/actions/wishList'
 import bookingListAction from '../../store/actions/bookingList'
 import bookingQtyAction from '../../store/actions/bookingQty'
 import wishListQtyAction from '../../store/actions/wishListQty'
-import countSignAction from '../../store/actions/countSign'
 import reviewListAction from '../../store/actions/reviewList'
 import emailAction from '../../store/actions/email'
 import {Input} from 'react-native-elements'
@@ -15,6 +14,7 @@ import colors from '../../constants/colors'
 import {LinearGradient} from 'expo-linear-gradient'
 import { auth } from './firebase/firebase'
 import {useDispatch,useSelector} from 'react-redux'
+import createUserAction from '../../store/actions/createUser'
 
 
 
@@ -104,30 +104,6 @@ const SignUpScreen = ({navigation,route}) => {
       AsyncStorage.removeItem('reviewList')
       dispatch(reviewListAction.addToReviewList([]))
 
-      let signNum = 0;
-
-      AsyncStorage.getItem('countSign').then((res) => {
-
-        let countSignData = JSON.parse(res)
-
-
-        signNum += 1
-
-        countSignData = signNum
-
-        console.log('Counting start....', countSignData)
-
-        AsyncStorage.setItem('countSign', JSON.stringify(countSignData))
-        dispatch(countSignAction.addToCountSign(countSignData))
-          
-        
-        })
-        .catch((error) => {
-
-          console.log('error....', error)
-
-
-        })
     
 
         if(name != '' && emailValid == '' && passValid == '' && rePassValid == ''){
@@ -192,11 +168,22 @@ const SignUpScreen = ({navigation,route}) => {
 
         
         const user = credentials.user
-        
-        console.log('Sign up with.....' , user.email)
 
-      
+        console.log('Sign up with.....' , user)
+
+        AsyncStorage.getItem('createUser').then((res) => {
+
+          const createUserData = JSON.parse(res)
+
+          if(createUserData == null){
+
+            AsyncStorage.setItem('createUser', JSON.stringify(user))
+            dispatch(createUserAction.addToCreateUser(user))
+          
+          }
         
+        })
+
         successRegister()
 
         navigation.navigate('Drawer')

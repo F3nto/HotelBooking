@@ -75,3 +75,17 @@ Author: F3nto <pyaesonetun1141999@gmail.com>
 Date:   Sun Apr 3 08:03:23 2022 +0630
 
     First Hotel booking Proj
+[33m7642a75[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m Fixed Review And Sign in And Sign Out
+[33m63af13b[m final fixing signin and signout and email
+[33mefeacdb[m User name and sign in and sign out
+[33m6dd7360[m Create User Autentication with firebase
+[33m5d49830[m Fixed Review List && init Sign in and sign up
+[33mad6e964[m fixed searchbar autocomplete and review modal
+[33m3c42ec0[m Fixed checkin and checkout
+[33m2ca9a55[m Fixed Search bar auto complete
+[33md2a143e[m fix map screen && create search bar auto complete home screen
+[33m5dde2e5[m can remove both same and different hotels in booking List , init map View, bookingList Qty
+[33mdcea453[m checking validation email and modified booking
+[33m6bd0673[m add Profile Screen
+[33m3bf5423[m add Profile Screen
+[33mbe27e12[m First Hotel booking Proj

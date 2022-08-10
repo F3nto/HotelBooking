@@ -1,12 +1,12 @@
 import React,{useState,useEffect} from 'react'
-import {ScrollView,SafeAreaView,View,Text,TouchableOpacity,Image,StyleSheet,Dimensions,TextInput,StatusBar,ToastAndroid} from 'react-native'
+import {ScrollView,SafeAreaView,View,Text,TouchableOpacity,Image,StyleSheet,Dimensions,TextInput,StatusBar,ToastAndroid, Alert} from 'react-native'
 import colors from '../../constants/colors'
 import {LinearGradient} from 'expo-linear-gradient'
 import {Input} from 'react-native-elements'
 import { auth } from './firebase/firebase'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import countSignAction from '../../store/actions/countSign'
 import { useDispatch,useSelector } from 'react-redux'
+import createUserAction from '../../store/actions/createUser'
 
 const screenWidth = Dimensions.get('screen').width
 
@@ -22,33 +22,8 @@ const LoginScreen = ({navigation, route}) => {
  
     const handleSignIn = () => {
 
-        let signNum = 0;
-
-        AsyncStorage.getItem('countSign').then((res) => {
-
-            let countSignData = JSON.parse(res)
-    
-    
-            signNum += 1
-    
-            countSignData = signNum
-    
-            console.log('Counting....', countSignData)
-    
-            AsyncStorage.setItem('countSign', JSON.stringify(countSignData))
-            dispatch(countSignAction.addToCountSign(countSignData))
-              
-            
-            })
-            .catch((error) => {
-    
-              console.log(error)
-    
-    
-            })
-
         
-
+        if(email != '' && pass != '') {
 
 
         auth.
@@ -58,20 +33,44 @@ const LoginScreen = ({navigation, route}) => {
 
             const user = credentials.user
 
-            console.log('Sign in with....', user.email)
+            console.log('Login user data.....', user)
 
-            successSignIn()
+            AsyncStorage.getItem('createUser').then((res) => {
 
-            navigation.navigate('Drawer')
+                const createUserData = JSON.parse(res)
 
-             
+                if(createUserData == null){
 
-        })
+                    AsyncStorage.setItem('createUser', JSON.stringify(user))
+                    dispatch(createUserAction.addToCreateUser(user))
 
-        .catch(error => alert("Enter your email and password!!!", error.massage))
+
+                }
+            
+            })
+
+                navigation.navigate('Drawer')
+
+                successSignIn()
+            
+            
+            }).catch(error => alert("Wrong Email And Password..Try again!!!", error.massage))
         
-        unSuccessSignIn()
+       
+
+        }else{
+
+            unSuccessSignIn()
+
+
+        }
     }
+
+ 
+
+
+
+
 
     const successSignIn = () => {
 
@@ -94,7 +93,7 @@ const LoginScreen = ({navigation, route}) => {
 
         ToastAndroid.showWithGravityAndOffset(
 
-            "Sign in Successful!!!",
+            "You cannot Sign in!!!",
 
             ToastAndroid.SHORT,
             ToastAndroid.BOTTOM,
